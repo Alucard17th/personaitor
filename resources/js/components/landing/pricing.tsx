@@ -17,7 +17,7 @@ import {
 import { cn } from '@/lib/utils';
 import type { SharedData } from '@/types';
 import { router, useForm, usePage } from '@inertiajs/react';
-import { CircleCheck, CircleHelp } from 'lucide-react';
+import { CircleHelp, Check } from 'lucide-react';
 import * as React from 'react';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
@@ -153,7 +153,7 @@ const Pricing: React.FC<PricingProps> = ({ plans }) => {
                 </TabsList>
             </Tabs>
 
-            <div className="mx-auto mt-12 grid max-w-7xl grid-cols-1 gap-6 text-center md:grid-cols-3 lg:grid-cols-3">
+            <div className="mx-auto mt-12 grid max-w-7xl grid-cols-1 gap-6 text-center md:grid-cols-3 lg:grid-cols-3 px-8">
                 {list.map((plan) => {
                     const basePrice = Number(plan.price) || 0;
                     const displayPrice =
@@ -167,9 +167,9 @@ const Pricing: React.FC<PricingProps> = ({ plans }) => {
                         <div
                             key={plan.name}
                             className={cn(
-                                'relative rounded-xl border bg-white p-6 shadow-md',
+                                'relative flex h-full flex-col rounded-xl border bg-white p-6 shadow-md',
                                 {
-                                    'border-[2px] border-primary py-10':
+                                    'border-[2px] border-primary':
                                         plan.is_popular,
                                 },
                             )}
@@ -179,6 +179,7 @@ const Pricing: React.FC<PricingProps> = ({ plans }) => {
                                     Most Popular
                                 </Badge>
                             )}
+
                             <h3 className="text-lg font-medium">{plan.name}</h3>
                             <p className="mt-2 text-4xl font-bold">
                                 ${displayPrice}
@@ -187,17 +188,17 @@ const Pricing: React.FC<PricingProps> = ({ plans }) => {
                                 </span>
                             </p>
                             {plan.description && (
-                                <p className="mt-4 font-medium text-muted-foreground">
+                                <p className="mt-3 font-small text-muted-foreground">
                                     {plan.description}
                                 </p>
                             )}
-                            <ul className="mt-4 space-y-2">
+                            <ul className="mt-6 flex-1 space-y-1">
                                 {plan.features?.map((feature: any) => (
                                     <li
                                         key={feature}
-                                        className="flex items-start gap-1.5"
+                                        className="flex items-start gap-2 text-sm leading-6"
                                     >
-                                        <CircleCheck className="mt-1 h-4 w-4 text-green-600" />
+                                        <Check className="mt-1 h-4 w-4 text-dark-600" />
                                         <span>{feature}</span>
                                         {feature.tooltip && (
                                             <Tooltip>
@@ -216,7 +217,7 @@ const Pricing: React.FC<PricingProps> = ({ plans }) => {
                             <Button
                                 onClick={() => handleSubscribeClick(plan)}
                                 className={cn(
-                                    'mt-10 w-full rounded-lg px-5 py-2.5',
+                                    'mt-8 w-full rounded-lg px-5 py-2.5', // <-- mt-auto pushes button to bottom
                                     plan.is_popular
                                         ? 'bg-primary text-primary-foreground hover:bg-primary/90'
                                         : 'border bg-black text-white hover:bg-gray-100 hover:text-black',
@@ -226,7 +227,6 @@ const Pricing: React.FC<PricingProps> = ({ plans }) => {
                                     ? 'Choose Popular Plan'
                                     : 'Start Free Trial'}
                             </Button>
-                            
                         </div>
                     );
                 })}

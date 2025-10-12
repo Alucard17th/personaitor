@@ -17,32 +17,51 @@ class ProductSeeder extends Seeder
         $products = [
             [
                 'name'            => 'Starter Plan',
-                'features'        => ['1 project', 'Basic analytics', 'Email support'],
-                'description'     => 'Ideal for freelancers or first-time builders launching a single project. Get essential features, simple insights, and responsive email support to get off the ground fast.',
-                'paddle_price_id' => 'pri_01j36w75011n0hzwcvqpeh3jg6',
-                'price'           => 22.00,   // or 990 if integer cents
-                'quantity'        => 50,
+                'features'        => [
+                    'Access up to 20 personas',
+                    'Basic analytics for campaigns',
+                    'Email support for setup questions',
+                    'Reusable templates for quick testing'
+                ],
+                'description'     => 'Ideal for solo marketers, designers, or early-stage founders. Launch and test campaigns using up to 20 personas with essential insights and email support to get started quickly.',
+                'paddle_price_id' => 'pri_01j36w75011n0hzwcvqpeh3jg6', // replace with your actual Paddle ID
+                'price'           => 9.99,
+                'quantity'        => 20,
                 'is_popular'      => false
             ],
             [
                 'name'            => 'Pro Plan',
-                'features'        => ['Unlimited projects', 'Advanced analytics', 'Priority support'],
-                'description'     => 'Best for growing teams that ship often. Run unlimited projects, unlock deeper analytics, and get priority support for faster iteration and issue resolution.',
-                'paddle_price_id' => 'pri_01j36w7h2n1qaqxm0ngp6qwmdz',
-                'price'           => 55.00,   // or 1990 if integer cents
-                'quantity'        => 100,
+                'features'        => [
+                    'Access up to 50 personas',
+                    'Advanced analytics for campaigns',
+                    'Priority email support',
+                    'Reusable templates & campaign cloning',
+                    'Collaboration for team insights'
+                ],
+                'description'     => 'Perfect for growing product teams and marketing teams. Manage campaigns across up to 50 personas, unlock deeper analytics, and collaborate efficiently with your team.',
+                'paddle_price_id' => 'pri_01j36w7h2n1qaqxm0ngp6qwmdz', // replace with your actual Paddle ID
+                'price'           => 24.99,
+                'quantity'        => 50,
                 'is_popular'      => true
             ],
             [
                 'name'            => 'Team Plan',
-                'features'        => ['Unlimited seats', 'SSO', 'Dedicated success manager'],
-                'description'     => 'Built for organizations that need scale and governance. Invite unlimited seats, streamline access with SSO, and partner with a dedicated success manager for rollout and training.',
-                'paddle_price_id' => 'pri_01j37ac98ak8df5m0nk5kry3h6',
-                'price'           => 79.00,   // or 4900 if integer cents
-                'quantity'        => 250,
+                'features'        => [
+                    'Access up to 150 personas',
+                    'Full analytics dashboard',
+                    'Dedicated success manager',
+                    'Unlimited project and campaign management',
+                    'Advanced collaboration features',
+                    'Reusable templates for multiple teams'
+                ],
+                'description'     => 'Designed for established product teams and agencies. Manage large-scale campaigns with up to 150 personas, get full analytics, and enjoy dedicated support to scale your efforts.',
+                'paddle_price_id' => 'pri_01j37ac98ak8df5m0nk5kry3h6', // replace with your actual Paddle ID
+                'price'           => 49.99,
+                'quantity'        => 150,
                 'is_popular'      => false
             ],
         ];
+
 
 
         foreach ($products as $data) {
