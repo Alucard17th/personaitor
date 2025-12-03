@@ -10,6 +10,7 @@ import { Label } from '@/components/ui/label';
 import { MultiSelect, type MultiSelectOption } from '@/components/multi-select';
 import type { BreadcrumbItem } from '@/types';
 import { dashboard } from '@/routes';
+import { Textarea } from '@/components/ui/textarea';
 
 interface Persona {
   id: number;
@@ -26,10 +27,10 @@ interface Campaign {
   personas?: Persona[];
 }
 
-interface CampaignFormProps {
-  campaign?: Campaign | null;
+interface CampaignFormPageProps {
   mode: 'create' | 'edit';
   personas: Persona[];
+  campaign?: Campaign | null; // required for edit
 }
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -37,7 +38,7 @@ const breadcrumbs: BreadcrumbItem[] = [
   { title: 'Campaigns', href: '/app/campaigns' },
 ];
 
-export default function CampaignForm({ campaign, mode, personas }: CampaignFormProps) {
+export default function CampaignFormPage({ mode, personas, campaign }: CampaignFormPageProps) {
   const { data, setData, post, put, processing, errors } = useForm({
     name: campaign?.name ?? '',
     description: campaign?.description ?? '',
@@ -46,6 +47,9 @@ export default function CampaignForm({ campaign, mode, personas }: CampaignFormP
     end_date: campaign?.end_date ?? '',
     personas: campaign?.personas?.map((p) => p.id.toString()) ?? [],
   });
+
+  const err = errors as Record<string, string | undefined>;
+  const hasError = (k: string) => Boolean(err[k]);
 
   const personaOptions: MultiSelectOption[] = React.useMemo(
     () => personas.map((p) => ({ label: p.name, value: String(p.id) })),
@@ -57,37 +61,48 @@ export default function CampaignForm({ campaign, mode, personas }: CampaignFormP
     if (mode === 'create') {
       post('/app/campaigns', { preserveScroll: true });
     } else {
-      put(`/app/campaigns/${campaign!.id}`, { preserveScroll: true });
+      if (!campaign?.id) return;
+      put(`/app/campaigns/${campaign.id}`, { preserveScroll: true });
     }
   };
 
   return (
     <AppLayout breadcrumbs={[...breadcrumbs, { title: mode === 'create' ? 'Create' : 'Edit', href: '#' }]}>
       <Head title={`${mode === 'create' ? 'Create' : 'Edit'} Campaign`} />
+
       <div className="space-y-6 p-6">
         <Card>
           <CardHeader>
             <CardTitle>{mode === 'create' ? 'Create' : 'Edit'} Campaign</CardTitle>
           </CardHeader>
+
           <CardContent>
+            {/* 🔔 Top error alert */}
+            {Object.keys(err).length > 0 && (
+              <div className="mb-4 rounded-md border border-destructive/50 bg-destructive/10 p-3 text-sm text-destructive">
+                <p className="font-medium">Please fix the following:</p>
+                <ul className="mt-1 list-disc pl-5">
+                  {Object.values(err).map((m, i) => m ? <li key={i}>{m}</li> : null)}
+                </ul>
+              </div>
+            )}
+
             <form onSubmit={submit} className="grid grid-cols-1 gap-4 md:grid-cols-2">
               {/* Name */}
               <div>
                 <Label htmlFor="name">Name</Label>
-                <Input id="name" value={data.name} onChange={(e) => setData('name', e.target.value)} placeholder='Campaign Name...' />
-                {errors.name && <p className="text-xs text-red-500 mt-1">{errors.name}</p>}
-              </div>
-
-              {/* Description */}
-              <div>
-                <Label htmlFor="description">Description</Label>
                 <Input
-                  id="description"
-                  value={data.description ?? ''}
-                  onChange={(e) => setData('description', e.target.value)}
-                  placeholder="Campaign Description..."
+                  id="name"
+                  value={data.name}
+                  onChange={(e) => setData('name', e.target.value)}
+                  placeholder="Campaign Name..."
+                  aria-invalid={hasError('name')}
+                  aria-describedby={hasError('name') ? 'name-error' : undefined}
+                  className={hasError('name') ? 'border-destructive focus-visible:ring-destructive' : ''}
                 />
-                {errors.description && <p className="text-xs text-red-500 mt-1">{errors.description}</p>}
+                {hasError('name') && (
+                  <p id="name-error" className="mt-1 text-xs text-red-500">{err.name}</p>
+                )}
               </div>
 
               {/* Status */}
@@ -95,15 +110,20 @@ export default function CampaignForm({ campaign, mode, personas }: CampaignFormP
                 <Label htmlFor="status">Status</Label>
                 <select
                   id="status"
-                  className="rounded border p-2 w-full"
+                  className={`h-9 w-full rounded-md border px-2 text-sm ${hasError('status') ? 'border-destructive focus-visible:ring-destructive' : ''}`}
                   value={data.status}
                   onChange={(e) => setData('status', e.target.value)}
+                  aria-invalid={hasError('status')}
+                  aria-describedby={hasError('status') ? 'status-error' : undefined}
                 >
                   <option value="draft">Draft</option>
                   <option value="active">Active</option>
                   <option value="paused">Paused</option>
                   <option value="completed">Completed</option>
                 </select>
+                {hasError('status') && (
+                  <p id="status-error" className="mt-1 text-xs text-red-500">{err.status}</p>
+                )}
               </div>
 
               {/* Start Date */}
@@ -114,7 +134,13 @@ export default function CampaignForm({ campaign, mode, personas }: CampaignFormP
                   id="start_date"
                   value={data.start_date}
                   onChange={(e) => setData('start_date', e.target.value)}
+                  aria-invalid={hasError('start_date')}
+                  aria-describedby={hasError('start_date') ? 'start_date-error' : undefined}
+                  className={hasError('start_date') ? 'border-destructive focus-visible:ring-destructive' : ''}
                 />
+                {hasError('start_date') && (
+                  <p id="start_date-error" className="mt-1 text-xs text-red-500">{err.start_date}</p>
+                )}
               </div>
 
               {/* End Date */}
@@ -125,19 +151,51 @@ export default function CampaignForm({ campaign, mode, personas }: CampaignFormP
                   id="end_date"
                   value={data.end_date}
                   onChange={(e) => setData('end_date', e.target.value)}
+                  aria-invalid={hasError('end_date')}
+                  aria-describedby={hasError('end_date') ? 'end_date-error' : undefined}
+                  className={hasError('end_date') ? 'border-destructive focus-visible:ring-destructive' : ''}
                 />
+                {hasError('end_date') && (
+                  <p id="end_date-error" className="mt-1 text-xs text-red-500">{err.end_date}</p>
+                )}
+              </div>
+
+                {/* Description */}
+              <div className="md:col-span-2">
+                <Label htmlFor="description">Description</Label>
+                <Textarea
+                  id="description"
+                  value={data.description ?? ''}
+                  onChange={(e) => setData('description', e.target.value)}
+                  placeholder="Campaign Description..."
+                  aria-invalid={hasError('description')}
+                  aria-describedby={hasError('description') ? 'description-error' : undefined}
+                  className={hasError('description') ? 'border-destructive focus-visible:ring-destructive' : ''}
+                />
+                {hasError('description') && (
+                  <p id="description-error" className="mt-1 text-xs text-red-500">{err.description}</p>
+                )}
               </div>
 
               {/* Personas MultiSelect */}
               <div className="md:col-span-2">
                 <Label>Personas</Label>
-                <MultiSelect
-                  options={personaOptions}
-                  placeholder="Select personas…"
-                  defaultValue={data.personas}
-                  onValueChange={(values) => setData('personas', values)}
-                />
-                {errors.personas && <p className="text-xs text-red-500 mt-1">{errors.personas}</p>}
+
+                {/* wrapper to force a visible red border if MultiSelect doesn’t expose its own error styles */}
+                <div className={`rounded-md border ${hasError('personas') ? 'border-destructive ring-1 ring-destructive/20' : 'border-transparent'}`}>
+                  <MultiSelect
+                    options={personaOptions}
+                    placeholder="Select personas…"
+                    defaultValue={data.personas}
+                    onValueChange={(values) => setData('personas', values)}
+                    aria-invalid={hasError('personas')}
+                    aria-describedby={hasError('personas') ? 'personas-error' : undefined}
+                  />
+                </div>
+
+                {hasError('personas') && (
+                  <p id="personas-error" className="mt-1 text-xs text-red-500">{err.personas}</p>
+                )}
               </div>
 
               {/* Submit */}

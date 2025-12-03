@@ -1,8 +1,8 @@
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
 import Marquee from "@/components/landing/ui/marquee";
-// import Link from "next/link";
-import React, { ComponentProps } from "react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { ComponentProps } from "react";
 
 const testimonials = [
   {
@@ -62,61 +62,105 @@ const testimonials = [
 ];
 
 const Testimonials = () => (
-  <div id="testimonials" className="flex justify-center items-center py-20">
-    <div className="h-full w-full">
-      <h2 className="mb-12 text-4xl md:text-5xl font-bold text-center tracking-tight px-6">
-        Testimonials
+  <section
+    id="testimonials"
+    className="relative mx-auto w-full px-6 py-16 text-center md:py-16"
+    aria-labelledby="testimonials-heading"
+  >
+    <div className="mb-8">
+      <Badge variant="secondary" className="rounded-full">
+        Customer love
+      </Badge>
+      <h2
+        id="testimonials-heading"
+        className="mt-4 text-3xl font-semibold tracking-tight sm:text-4xl"
+      >
+        “This actually ships work”
       </h2>
-      <div className="relative">
-        <div className="z-10 absolute left-0 inset-y-0 w-[15%] bg-linear-to-r from-background to-transparent" />
-        <div className="z-10 absolute right-0 inset-y-0 w-[15%] bg-linear-to-l from-background to-transparent" />
-        <Marquee pauseOnHover className="[--duration:20s]">
-          <TestimonialList />
-        </Marquee>
-        <Marquee pauseOnHover reverse className="mt-4 [--duration:20s]">
-          <TestimonialList />
-        </Marquee>
-      </div>
+      <p className="mt-3 mx-auto max-w-[72ch] text-[var(--muted-foreground)]">
+        Long-form pull-quotes with the KPIs that matter—speed to insight,
+        alignment, and outcomes.
+      </p>
     </div>
-  </div>
+
+    <div className="relative">
+      {/* edge fades */}
+      <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-[15%] bg-gradient-to-r from-[var(--background)] to-transparent" />
+      <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-[15%] bg-gradient-to-l from-[var(--background)] to-transparent" />
+
+      <Marquee pauseOnHover className="[--duration:22s]">
+        <TestimonialList />
+      </Marquee>
+      <Marquee pauseOnHover reverse className="mt-4 [--duration:24s]">
+        <TestimonialList />
+      </Marquee>
+    </div>
+  </section>
 );
 
-const TestimonialList = () =>
-  testimonials.map((testimonial) => (
-    <div
-      key={testimonial.id}
-      className="min-w-96 max-w-sm bg-accent rounded-xl p-6"
-    >
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <Avatar>
-            <AvatarFallback className="text-xl font-medium bg-primary text-primary-foreground">
-              {testimonial.name.charAt(0)}
-            </AvatarFallback>
-          </Avatar>
-          <div>
-            <p className="text-lg font-semibold">{testimonial.name}</p>
-            <p className="text-sm text-gray-500">{testimonial.designation}</p>
+const TestimonialList = () => (
+  <>
+    {testimonials.map((t) => (
+      <article
+        key={t.id}
+        className="
+          min-w-[22rem] max-w-[26rem]
+          rounded-xl border border-[var(--border)]
+          bg-[var(--card)]/80 supports-[backdrop-filter]:bg-[var(--card)]/60 backdrop-blur
+          p-5 text-left shadow-sm ring-1 ring-black/5
+          transition hover:shadow-md
+          mx-2
+        "
+      >
+        <header className="flex items-center justify-between gap-3">
+          <div className="flex min-w-0 items-center gap-3">
+            <Avatar className="h-10 w-10 ring-1 ring-black/5">
+              <AvatarImage src={t.avatar} alt={t.name} />
+              <AvatarFallback className="bg-[var(--primary)] text-[var(--primary-foreground)] text-sm">
+                {t.name.slice(0, 2).toUpperCase()}
+              </AvatarFallback>
+            </Avatar>
+            <div className="min-w-0">
+              <p className="truncate text-sm font-medium">{t.name}</p>
+              <p className="truncate text-xs text-[var(--muted-foreground)]">
+                {t.designation} • {t.company}
+              </p>
+            </div>
           </div>
-        </div>
-        <Button variant="ghost" size="icon" asChild>
-          <a href="#" target="_blank">
-            <TwitterLogo className="w-4 h-4" />
-          </a>
-        </Button>
-      </div>
-      <p className="mt-5 text-[17px]">{testimonial.testimonial}</p>
-    </div>
-  ));
+
+          <Button
+            variant="ghost"
+            size="icon"
+            asChild
+            className="h-8 w-8 text-[var(--muted-foreground)] hover:text-[var(--foreground)]"
+          >
+            <a
+              href="https://x.com/"
+              target="_blank"
+              rel="noreferrer noopener"
+              aria-label="View on X"
+            >
+              <TwitterLogo className="h-4 w-4" />
+            </a>
+          </Button>
+        </header>
+
+        <p className="mt-4 text-[15px] leading-relaxed text-[var(--foreground)]">
+          {t.testimonial}
+        </p>
+      </article>
+    ))}
+  </>
+);
 
 const TwitterLogo = (props: ComponentProps<"svg">) => (
   <svg
     role="img"
     viewBox="0 0 24 24"
     xmlns="http://www.w3.org/2000/svg"
+    aria-label="X"
     {...props}
   >
-    <title>X</title>
     <path
       fill="currentColor"
       d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"

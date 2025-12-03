@@ -64,6 +64,16 @@ class User extends Authenticatable
         return $this->hasMany(Persona::class, 'user_id');
     }
 
+    public function campaigns()
+    {
+        return $this->hasMany(Campaign::class, 'created_by');
+    }
+
+    public function categories()
+    {
+        return $this->hasMany(Category::class);
+    }
+
     public function canGenerate()
     {   
         $quantity = $this->quantity;

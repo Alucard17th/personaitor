@@ -16,6 +16,7 @@ const sidebarNavItems: NavItem[] = [
         href: edit(),
         icon: null,
     },
+    { title: 'Subscription', href: '/settings/subscription', icon: null },
     {
         title: 'Password',
         href: editPassword(),

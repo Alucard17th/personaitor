@@ -10,7 +10,7 @@ class Campaign extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name', 'description', 'status', 'start_date', 'end_date', 'created_by', 'analytics'
+        'name', 'description', 'status', 'start_date', 'end_date', 'created_by', 'analytics',
     ];
 
     protected $casts = [

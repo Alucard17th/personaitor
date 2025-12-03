@@ -85,7 +85,7 @@ export default function PersonaBuilderPage() {
     );
     const [lineHeight, setLineHeight] = useState(1.4); // 1.0 - 2.0
     const [imgMaxWidth, setImgMaxWidth] = useState(100); // % inside avatar cells
-    const [showSettings, setShowSettings] = useState(true);
+    const [showSettings, setShowSettings] = useState(false);
 
     // GridStack refs
     const gridRef = useRef<HTMLDivElement>(null);
@@ -1397,7 +1397,7 @@ export default function PersonaBuilderPage() {
                                         : 'md:col-span-12'
                                 }
                             >
-                                <div className="mb-2">
+                                {/* <div className="mb-2">
                                     <Button
                                         variant="outline"
                                         size="icon"
@@ -1409,7 +1409,7 @@ export default function PersonaBuilderPage() {
                                     >
                                         <Settings2 className="h-4 w-4" />
                                     </Button>
-                                </div>
+                                </div> */}
                                 <div
                                     ref={gridRef}
                                     className="grid-stack rounded-md p-2"

@@ -17,7 +17,7 @@ const Navbar = () => {
         router.flushAll();
     };
     return (
-        <nav className="xs:h-16 fixed inset-x-4 top-6 z-10 mx-auto h-14 max-w-(--breakpoint-xl) rounded-full border bg-background/50 backdrop-blur-xs dark:border-slate-700/70">
+        <nav className="xs:h-16 fixed inset-x-4 top-6 z-[999] mx-auto h-14 max-w-(--breakpoint-xl) rounded-full border bg-background/50 backdrop-blur-xs dark:border-slate-700/70">
             <div className="mx-auto flex h-full items-center justify-between px-4">
                 <Link href="/">
                     <Logo />

@@ -10,20 +10,22 @@ use Inertia\Inertia;
 
 class CampaignController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $campaigns = Campaign::with('personas')
+        $campaigns = $request->user()->campaigns()
+            ->with('personas')
             ->latest()
             ->paginate(15)
             ->through(fn (Campaign $c) => [
-                'id'        => $c->id,
-                'name'      => $c->name,
-                'start_date'=> $c->start_date?->toIso8601String(),
-                'end_date'=> $c->end_date?->toIso8601String(),
-                'status'    => $c->status,
-                'personas'  => $c->personas
+                'id'         => $c->id,
+                'name'       => $c->name,
+                'start_date' => $c->start_date?->toIso8601String(),
+                'end_date'   => $c->end_date?->toIso8601String(),
+                'status'     => $c->status,
+                'personas'   => $c->personas,
             ])
             ->withQueryString();
+
         return Inertia::render('app/campaigns/index', compact('campaigns'));
     }
 
@@ -51,6 +53,9 @@ class CampaignController extends Controller
             'personas' => 'nullable|array',
             'personas.*' => 'exists:personas,id',
         ]);
+
+        // Attach the user to the campaign
+        $data['created_by'] = $request->user()->id;
 
         $campaign = Campaign::create($data);
         if (!empty($data['personas'])) {

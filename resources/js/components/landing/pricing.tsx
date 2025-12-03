@@ -129,11 +129,11 @@ const Pricing: React.FC<PricingProps> = ({ plans }) => {
     return (
         <div
             id="pricing"
-            className="xs:py-20 flex flex-col items-center justify-center px-6 py-12"
+            className="flex flex-col items-center justify-center px-6 pb-16 md:pb-16 flex flex-col items-center justify-center text-center"
         >
-            <h1 className="xs:text-4xl text-center text-3xl font-bold tracking-tight md:text-5xl">
+            <h2 className="mt-4 text-3xl font-semibold tracking-tight sm:text-4xl">
                 Pricing
-            </h1>
+            </h2>
 
             <Tabs
                 value={selectedBillingPeriod}

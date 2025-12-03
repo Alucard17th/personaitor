@@ -9,6 +9,7 @@ use App\Http\Controllers\App\PersonaController;
 use App\Http\Controllers\App\CategoryController;
 use App\Http\Controllers\App\CampaignController;
 use App\Http\Controllers\NewsletterController;
+use App\Http\Controllers\SubscriptionController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/terms', [HomeController::class, 'terms'])->name('terms');

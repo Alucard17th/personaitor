@@ -11,9 +11,10 @@ use Illuminate\Support\Str;
 
 class CategoryController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $categories = Category::query()
+        $categories = $request->user()->categories()
+            ->with('personas')
             ->latest()
             ->paginate(15)
             ->withQueryString();
@@ -43,6 +44,9 @@ class CategoryController extends Controller
         if (empty($data['slug'])) {
             $data['slug'] = Str::slug($data['name']);
         }
+
+        // Attach the user to the category
+        $data['user_id'] = $request->user()->id;
 
         Category::create($data);
 

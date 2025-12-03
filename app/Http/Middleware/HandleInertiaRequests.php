@@ -70,6 +70,14 @@ class HandleInertiaRequests extends Middleware
             'appName' => env('APP_NAME', 'Laravel Starter Kit'),
             'appUrl' => env('APP_URL', 'Laravel Starter Kit'),
             'appEmail' => env('APP_EMAIL', 'Laravel Starter Kit'),
+
+            // Errors
+            'errors' => function () {
+                return session()->get('errors')
+                    ? session()->get('errors')->getBag('default')->getMessages()
+                    : (object)[];
+            },
+
         ];
     }
 }

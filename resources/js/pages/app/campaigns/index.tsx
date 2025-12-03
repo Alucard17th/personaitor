@@ -25,6 +25,7 @@ import { ArrowUpDown, ChevronDown, Pencil, Trash } from 'lucide-react';
 import React from 'react';
 
 // TanStack
+import { Badge } from '@/components/ui/badge';
 import {
     ColumnDef,
     ColumnFiltersState,
@@ -36,6 +37,19 @@ import {
     useReactTable,
     VisibilityState,
 } from '@tanstack/react-table';
+
+type Status = 'draft' | 'active' | 'paused' | 'completed';
+
+const STATUS_STYLES: Record<Status, string> = {
+    draft: 'border-transparent bg-muted text-muted-foreground',
+    active: 'border-transparent bg-emerald-100 text-emerald-800 dark:bg-emerald-500/15 dark:text-emerald-300',
+    paused: 'border-transparent bg-amber-100 text-amber-800 dark:bg-amber-500/15 dark:text-amber-300',
+    completed:
+        'border-transparent bg-blue-100 text-blue-800 dark:bg-blue-500/15 dark:text-blue-300',
+};
+
+const toLabel = (s?: string) =>
+    s ? s.charAt(0).toUpperCase() + s.slice(1).toLowerCase() : '—';
 
 type CampaignRow = {
     id: number;
@@ -116,32 +130,80 @@ export default function CampaignsIndex({ campaigns }: PageProps) {
                     <div className="font-medium">{row.getValue('name')}</div>
                 ),
             },
+            // 2) Column definition
             {
                 accessorKey: 'status',
                 header: 'Status',
-                cell: ({ row }) => <div>{row.getValue('status')}</div>,
+                cell: ({ row }) => {
+                    const raw =
+                        (row.getValue('status') as string | undefined) ?? '';
+                    const status = raw.toLowerCase() as Status;
+                    const label = toLabel(raw);
+                    const cls =
+                        STATUS_STYLES[status as Status] ??
+                        'border-transparent bg-muted text-muted-foreground';
+
+                    return (
+                        <Badge
+                            variant="outline"
+                            className={cls}
+                            aria-label={`Status: ${label}`}
+                        >
+                            {label}
+                        </Badge>
+                    );
+                },
             },
             {
                 accessorKey: 'start_date',
                 header: 'Start Date',
-                cell: ({ row }) => (
-                    <div>{row.getValue('start_date') || '-'}</div>
-                ),
+                cell: ({ row }) => {
+                    const v = row.getValue('start_date') as
+                        | string
+                        | null
+                        | undefined;
+                    return <div>{v ? new Date(v).toLocaleString() : '-'}</div>;
+                },
             },
             {
                 accessorKey: 'end_date',
                 header: 'End Date',
-                cell: ({ row }) => <div>{row.getValue('end_date') || '-'}</div>,
+                cell: ({ row }) => {
+                    const v = row.getValue('end_date') as
+                        | string
+                        | null
+                        | undefined;
+                    return <div>{v ? new Date(v).toLocaleString() : '-'}</div>;
+                },
             },
             {
                 id: 'personas',
                 header: 'Personas',
-                cell: ({ row }) => (
-                    <div>
-                        {row.original.personas.map((p) => p.name).join(', ') ||
-                            '-'}
-                    </div>
-                ),
+                cell: ({ row }) => {
+                    const names = (row.original.personas ?? []).map(
+                        (p: { name: string }) => p.name,
+                    );
+
+                    if (names.length === 0) return <div>—</div>;
+
+                    const MAX_VISIBLE = 2; // change to 4 if you prefer
+                    const visible = names.slice(0, MAX_VISIBLE).join(', ');
+                    const rest = names.length - MAX_VISIBLE;
+
+                    return (
+                        <div title={names.join(', ')}>
+                            {visible}
+                            {rest > 0 && (
+                                <>
+                                    {' '}
+                                    <span className="inline-flex cursor-pointer items-center rounded-full border bg-muted px-2.5 py-0.5 text-xs font-semibold text-muted-foreground hover:bg-muted/80">
+                                        +{rest} more
+                                    </span>
+                                </>
+                            )}
+                        </div>
+                    );
+                },
             },
             {
                 id: 'actions',

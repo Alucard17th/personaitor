@@ -255,8 +255,9 @@
   --sidebar-ring: var(--ring);
 }
 
-
-
+.main{
+  background: #6369c514;
+}
 
 @layer base {
     * {
@@ -265,5 +266,26 @@
 
     body {
         @apply bg-background text-foreground;
+    }
+}
+
+@theme inline {
+  --animate-aurora: aurora 60s linear infinite;
+  @keyframes aurora {
+    from {
+      background-position: 50% 50%, 50% 50%;
+    }
+    to {
+      background-position: 350% 50%, 350% 50%;
+    }
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+    }
+  body {
+    @apply bg-background text-foreground;
     }
 }

@@ -4,7 +4,6 @@ namespace App\Http\Controllers\App;
 
 use App\Http\Controllers\Controller;
 use App\Models\Persona;
-use App\Models\Product;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -34,15 +33,9 @@ class PersonaController extends Controller
             ->take(10)
             ->get(['id','name','favorite']);
 
-        $products = Product::query()
-            ->latest()
-            ->take(20)
-            ->get(['id','name']);
-
         return Inertia::render('app/personas/index', [
             'personas'           => $personas,
             'favorite_personas'  => $favorite_personas,
-            'products'           => $products,
         ]);
     }
 
@@ -260,14 +253,6 @@ class PersonaController extends Controller
         }
 
         return to_route('personas.edit', $persona)->with('status', 'Persona created');
-
-        // return back()->with([
-        //     'status' => 'Persona created',
-        //     'saved_persona' => [
-        //         'id'   => $persona->id,
-        //         'name' => $persona->name,
-        //     ],
-        // ]);
     }
 
     /**

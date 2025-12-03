@@ -12,8 +12,10 @@ import 'gridstack/dist/gridstack.css';
 import html2canvas from 'html2canvas';
 import { Printer, Save, Settings2 } from 'lucide-react';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { PersonaFigmaExport } from './PersonaFigmaExport';
 
-type SerializedItem = {
+type SerializedItem =
+ {
     x: number;
     y: number;
     w: number;
@@ -47,6 +49,8 @@ const breadcrumbs: BreadcrumbItem[] = [
 export default function PersonaEditPage() {
     const { props } = usePage<PageProps>();
     const persona = props.persona;
+
+    console.log('Persona data:', persona);
 
     // Editor section
     const [personaName, setPersonaName] = useState(persona.name ?? '');
@@ -420,6 +424,24 @@ export default function PersonaEditPage() {
         link.click();
     };
 
+    const [exportItems, setExportItems] = useState<SerializedItem[]>([]);
+
+    // Update export items whenever grid changes
+    const updateExportItems = () => setExportItems(serialize());
+
+    useEffect(() => {
+        const grid = gridInstanceRef.current;
+        if (!grid) return;
+
+        // Whenever grid is hydrated
+        setExportItems(serialize());
+
+        // Listen for changes
+        grid.on('change', () => {
+            updateExportItems();
+        });
+    }, [persona.id]);
+
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head
@@ -427,6 +449,31 @@ export default function PersonaEditPage() {
             />
             <div className="space-y-6 p-6">
                 {/* Top bar: name + actions */}
+                <PersonaFigmaExport
+                    personaName={personaName}
+                    items={exportItems} // from your GridStack instance
+                    settings={{
+                        backgroundColor: bgColor,
+                        columnColor,
+                        textColor,
+                        titleColor,
+                        titleSize,
+                        textSize,
+                        radius,
+                        padding,
+                        shadow,
+                        borderOn,
+                        borderColor,
+                        borderWidth,
+                        titleWeight,
+                        titleAlign,
+                        lineHeight,
+                        imgMaxWidth,
+                    }}
+                    figmaAccessToken={import.meta.env.VITE_FIGMA_TOKEN!}
+                    figmaFileId="JTtrZhwz3ocP2AoVjK1ws3"
+                /> 
+
                 <div className="grid grid-cols-1 gap-2 md:grid-cols-12">
                     <div className="md:col-span-6">
                         <Label htmlFor="name" className="font-semibold">
