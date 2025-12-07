@@ -77,7 +77,7 @@ const Reviews3: React.FC = () => {
           <Card className="h-full border border-[var(--border)] bg-[var(--card)]/80 backdrop-blur-xs supports-[backdrop-filter]:bg-[var(--card)]/60">
             <CardHeader className="flex flex-row items-center gap-3">
               <img
-                src="/images/reviewers/leila-haddad.jpg"
+                src="https://ui-avatars.com/api/?name=Leila+Haddad"
                 alt="Leila Haddad"
                 className="h-10 w-10 rounded-full object-cover"
                 loading="lazy"
@@ -110,7 +110,7 @@ const Reviews3: React.FC = () => {
           <Card className="h-full border border-[var(--border)] bg-[var(--card)]/80 backdrop-blur-xs supports-[backdrop-filter]:bg-[var(--card)]/60">
             <CardHeader className="flex flex-row items-center gap-3">
               <img
-                src="/images/reviewers/tom-alvarez.jpg"
+                src="https://ui-avatars.com/api/?name=Tom+Álvarez"
                 alt="Tom Álvarez"
                 className="h-10 w-10 rounded-full object-cover"
                 loading="lazy"
@@ -143,7 +143,7 @@ const Reviews3: React.FC = () => {
           <Card className="h-full border border-[var(--border)] bg-[var(--card)]/80 backdrop-blur-xs supports-[backdrop-filter]:bg-[var(--card)]/60">
             <CardHeader className="flex flex-row items-center gap-3">
               <img
-                src="/images/reviewers/sara-benyounes.jpg"
+                src="https://ui-avatars.com/api/?name=Sara+Benyounes"
                 alt="Sara Benyounes"
                 className="h-10 w-10 rounded-full object-cover"
                 loading="lazy"

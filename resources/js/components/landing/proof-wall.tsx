@@ -75,7 +75,7 @@ const ProofWall: React.FC = () => {
             <CardHeader>
               <div className="flex items-center gap-3">
                 <img
-                  src="/images/logos/logo-1.svg"
+                  src="https://ui-avatars.com/api/?name=Click+House&background=000000&color=fff&rounded=true"
                   alt="ClickHouse"
                   className="h-7 w-7"
                   loading="lazy"
@@ -139,7 +139,7 @@ const ProofWall: React.FC = () => {
             <CardHeader>
               <div className="flex items-center gap-3">
                 <img
-                  src="/images/logos/logo-2.svg"
+                  src="https://ui-avatars.com/api/?name=Data+Forge&background=000000&color=fff&rounded=true"
                   alt="DataForge"
                   className="h-7 w-7"
                   loading="lazy"
@@ -203,7 +203,7 @@ const ProofWall: React.FC = () => {
             <CardHeader>
               <div className="flex items-center gap-3">
                 <img
-                  src="/images/logos/logo-3.svg"
+                  src="https://ui-avatars.com/api/?name=Secure+Pay&background=000000&color=fff&rounded=true"
                   alt="SecurePay"
                   className="h-7 w-7"
                   loading="lazy"

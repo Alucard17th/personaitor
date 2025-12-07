@@ -50,7 +50,7 @@ const HowAndIndustries = () => {
             <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl">
               {/* Swap to a <video> when ready */}
               <img
-                src="/images/product-canvas.png"
+                src="/img/persona-1.png"
                 alt="PERSONAAITOR canvas: pains, JTBD, objections, and messaging angles"
                 className="h-full w-full object-cover"
                 loading="lazy"
