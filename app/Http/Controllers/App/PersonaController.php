@@ -58,9 +58,9 @@ class PersonaController extends Controller
      */
     public function generate(Request $request)
     {
-        // if (!$request->user()->canGenerate()) {
-        //     return back()->with('error', 'Insufficient credits.');
-        // }
+        if (!$request->user()->canGenerate()) {
+            return back()->with('error', 'Insufficient credits.');
+        }
 
         $payload = json_decode($request->input('data') ?? '{}', true);
         $prompt  = $payload['prompt'] ?? null;
