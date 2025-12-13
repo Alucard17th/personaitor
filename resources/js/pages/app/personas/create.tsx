@@ -550,6 +550,34 @@ export default function PersonaBuilderPage() {
         return dataRef.current;
     };
 
+    const handleFlash = (flash?: FlashPayload) => {
+        if (!flash) return;
+
+        if (flash.generated) {
+            let content = flash.generated.persona?.content ?? '{}';
+            if (content.charAt(content.length - 1) !== '}') content += '}';
+            try {
+                const personaObj = JSON.parse(content) as Record<
+                    string,
+                    unknown
+                >;
+                setPending({
+                    persona: personaObj,
+                    image: flash.generated.image,
+                });
+                setShowEditor(true);
+            } catch (e) {
+                console.error('Failed to parse persona JSON', e);
+                toast.error('Invalid persona data');
+            }
+        }
+
+        if (flash.saved_persona?.id) {
+            setNewPersonaId(flash.saved_persona.id);
+            if (flash.saved_persona.name) setPersonaName(flash.saved_persona.name);
+        }
+    };
+
     // ---- Generate (unchanged flow) ----
     const onGenerate = () => {
         if (!prompt.trim()) {
@@ -560,9 +588,21 @@ export default function PersonaBuilderPage() {
             data: JSON.stringify({ prompt, level, additionalCriteria: chips }),
         };
 
+        let generatingToastId: string | number | undefined;
+
         router.post('/app/personas/generate', data, {
             preserveScroll: true,
-            onStart: () => toast.message('Generating…'),
+            onStart: () => {
+                generatingToastId = toast.message('Generating…');
+            },
+            onSuccess: (page) => {
+                const p = page.props as unknown as { flash?: FlashPayload };
+                handleFlash(p.flash);
+            },
+            onFinish: () => {
+                if (generatingToastId !== undefined)
+                    toast.dismiss(generatingToastId);
+            },
             // onError: () => toast.error('Generation failed'),
             // onFinish: () => {},
         });
@@ -620,36 +660,7 @@ export default function PersonaBuilderPage() {
     };
 
     useEffect(() => {
-        const flash = props.flash;
-        if (!flash) return;
-
-        // if (flash.error) toast.error(flash.error);
-        // if (flash.status) toast.success(flash.status);
-
-        if (flash.generated) {
-            let content = flash.generated.persona?.content ?? '{}';
-            if (content.charAt(content.length - 1) !== '}') content += '}';
-            try {
-                const personaObj = JSON.parse(content) as Record<
-                    string,
-                    unknown
-                >;
-                setPending({
-                    persona: personaObj,
-                    image: flash.generated.image,
-                });
-                setShowEditor(true);
-            } catch (e) {
-                console.error('Failed to parse persona JSON', e);
-                toast.error('Invalid persona data');
-            }
-        }
-
-        if (flash.saved_persona?.id) {
-            setNewPersonaId(flash.saved_persona.id);
-            if (flash.saved_persona.name)
-                setPersonaName(flash.saved_persona.name);
-        }
+        handleFlash(props.flash);
     }, [props.flash]);
 
     useEffect(() => {

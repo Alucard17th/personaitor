@@ -22,7 +22,7 @@ export default function AppLayout({ children, breadcrumbs, ...props }: AppLayout
     if (flash.info)    toast(flash.info);
     if (flash.warning) toast.warning(flash.warning);
     if (flash.error)   toast.error(flash.error);
-  }, [flash?.status, flash?.success, flash?.info, flash?.warning, flash?.error]);
+  }, [flash]);
 
   return (
     <AppLayoutTemplate breadcrumbs={breadcrumbs} {...props}>
