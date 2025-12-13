@@ -42,7 +42,7 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        $user->update(['quantity' => 10]);
+        // $user->update(['quantity' => 10]);
 
         event(new Registered($user));
 
