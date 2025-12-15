@@ -626,67 +626,60 @@ export default function PersonaEditPage() {
                                             />
                                         </div>
 
-                                        <div>
-                                            <Label
-                                                htmlFor="twt"
-                                                className="text-[11px]"
-                                            >
-                                                Title - Weight
-                                            </Label>
-                                            <select
-                                                id="twt"
-                                                className="h-8 w-full rounded-md border px-2 text-sm"
-                                                value={titleWeight}
-                                                onChange={(e) =>
-                                                    setTitleWeight(
-                                                        parseInt(
-                                                            e.target.value,
-                                                            10,
-                                                        ),
-                                                    )
-                                                }
-                                            >
-                                                {[400, 500, 600, 700, 800].map(
-                                                    (w) => (
-                                                        <option
-                                                            key={w}
-                                                            value={w}
-                                                        >
-                                                            {w}
-                                                        </option>
+                                    <div>
+                                        <Label
+                                            htmlFor="twt"
+                                            className="text-xs"
+                                        >
+                                            Title - Weight
+                                        </Label>
+                                        <select
+                                            id="twt"
+                                            className="h-8 w-full rounded-md border border-foreground/30 bg-background px-2 text-sm outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 dark:border-foreground/40 dark:bg-input/30"
+                                            value={titleWeight}
+                                            onChange={(e) =>
+                                                setTitleWeight(
+                                                    Number(
+                                                        e.target.value,
                                                     ),
-                                                )}
-                                            </select>
-                                        </div>
+                                                )
+                                            }
+                                        >
+                                            {[400, 500, 600, 700, 800].map(
+                                                (w) => (
+                                                    <option
+                                                        key={w}
+                                                        value={w}
+                                                    >
+                                                        {w}
+                                                    </option>
+                                                ),
+                                            )}
+                                        </select>
+                                    </div>
 
-                                        <div>
-                                            <Label
-                                                htmlFor="talign"
-                                                className="text-[11px]"
-                                            >
-                                                Title - Align
-                                            </Label>
-                                            <select
-                                                id="talign"
-                                                className="h-8 w-full rounded-md border px-2 text-sm"
-                                                value={titleAlign}
-                                                onChange={(e) =>
-                                                    setTitleAlign(
-                                                        e.target.value as any,
-                                                    )
-                                                }
-                                            >
-                                                <option value="left">
-                                                    Left
-                                                </option>
-                                                <option value="center">
-                                                    Center
-                                                </option>
-                                                <option value="right">
-                                                    Right
-                                                </option>
-                                            </select>
-                                        </div>
+                                    <div>
+                                        <Label
+                                            htmlFor="talign"
+                                            className="text-xs"
+                                        >
+                                            Title - Align
+                                        </Label>
+                                        <select
+                                            id="talign"
+                                            className="h-8 w-full rounded-md border border-foreground/30 bg-background px-2 text-sm outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 dark:border-foreground/40 dark:bg-input/30"
+                                            value={titleAlign}
+                                            onChange={(e) =>
+                                                setTitleAlign(
+                                                    e.target.value as any,
+                                                )
+                                            }
+                                        >
+                                            <option value="left">Left</option>
+                                            <option value="center">Center</option>
+                                            <option value="right">Right</option>
+                                        </select>
+                                    </div>
 
                                         {/* TEXT */}
                                         <div>

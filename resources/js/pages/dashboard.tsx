@@ -156,41 +156,41 @@ export default function Dashboard() {
             <Head title="Dashboard" />
             <div className="flex h-full flex-1 flex-col gap-6 rounded-xl p-4">
                 {/* Enhanced Card Row */}
-                <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
                     {statsCards.map(({ key, count, config }) => {
                         const Icon = config.icon;
                         return (
                             <Card
                                 key={key}
-                                className={`group cursor-pointer border-2 transition-all duration-300 hover:scale-105 hover:shadow-lg ${config.borderColor} hover:border-current`}
+                                className={`group cursor-pointer border-2 transition-all duration-300 hover:scale-[1.02] hover:shadow-md ${config.borderColor} hover:border-current`}
                             >
-                                <CardContent className="p-4">
-                                    <div className="mb-4 flex items-center justify-between">
+                                <CardContent className="p-3">
+                                    <div className="mb-3 flex items-center justify-between">
                                         <div
-                                            className={`rounded-xl p-3 ${config.bgColor}`}
+                                            className={`rounded-lg p-2 ${config.bgColor}`}
                                         >
                                             <Icon
-                                                className={`h-6 w-6 ${config.color}`}
+                                                className={`h-5 w-5 ${config.color}`}
                                             />
                                         </div>
                                         <Badge
                                             variant="secondary"
-                                            className="flex items-center gap-1"
+                                            className="flex items-center gap-1 px-2 py-0.5 text-xs"
                                         >
                                             <TrendingUp className="h-3 w-3" />
                                             {config.trend}
                                         </Badge>
                                     </div>
 
-                                    <CardTitle className="mb-2 text-3xl font-bold">
+                                    <CardTitle className="mb-1 text-2xl font-bold">
                                         {count}
                                     </CardTitle>
 
-                                    <CardDescription className="mb-1 text-lg font-semibold text-foreground">
+                                    <CardDescription className="mb-1 text-base font-semibold text-foreground">
                                         {config.title}
                                     </CardDescription>
 
-                                    <p className="mb-4 text-sm text-muted-foreground">
+                                    <p className="mb-3 text-sm text-muted-foreground">
                                         {config.description}
                                     </p>
 
@@ -205,10 +205,10 @@ export default function Dashboard() {
                                             }
                                         >
                                             {config.action}
-                                            <Plus className="h-4 w-4" />
+                                            <Plus className="h-3.5 w-3.5" />
                                         </Button>
                                         <ArrowUpRight
-                                            className={`h-4 w-4 ${config.color} opacity-0 transition-opacity group-hover:opacity-100`}
+                                            className={`h-3.5 w-3.5 ${config.color} opacity-0 transition-opacity group-hover:opacity-100`}
                                         />
                                     </div>
                                 </CardContent>

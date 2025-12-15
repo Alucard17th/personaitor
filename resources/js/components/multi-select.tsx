@@ -882,17 +882,17 @@ export const MultiSelect = React.forwardRef<MultiSelectRef, MultiSelectProps>(
                             // )}
                             className={cn(
                                 // Base
-                                'flex w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm',
+                                'flex w-full items-center justify-between rounded-md border border-foreground/30 bg-background px-3 py-2 text-sm dark:border-foreground/40 dark:bg-input/30',
                                 // Smooth transitions
                                 'transition-all duration-150 ease-in-out',
                                 // Hover (no layout shift, uses accent surface)
-                                'hover:border-input hover:bg-accent hover:text-accent-foreground',
-                                // Focus-visible ring (matches shadcn)
-                                'focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none',
+                                'hover:bg-accent hover:text-accent-foreground',
+                                // Focus-visible ring (matches Input/Textarea)
+                                'focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-none',
                                 // Active/pressed subtle depth
                                 'active:scale-[0.99]',
                                 // When the popover is open (Radix sets data-state='open' on the trigger)
-                                'data-[state=open]:ring-2 data-[state=open]:ring-ring data-[state=open]:ring-offset-2 data-[state=open]:ring-offset-background',
+                                'data-[state=open]:border-ring data-[state=open]:ring-[3px] data-[state=open]:ring-ring/50',
                                 // Optional: shadow on hover for a bit of lift
                                 'hover:shadow-sm',
                                 // Respect your size toggles

@@ -110,7 +110,7 @@ export default function CampaignFormPage({ mode, personas, campaign }: CampaignF
                 <Label htmlFor="status">Status</Label>
                 <select
                   id="status"
-                  className={`h-9 w-full rounded-md border px-2 text-sm ${hasError('status') ? 'border-destructive focus-visible:ring-destructive' : ''}`}
+                  className={`h-9 w-full rounded-md border border-foreground/30 bg-background px-2 text-sm outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 dark:border-foreground/40 dark:bg-input/30 ${hasError('status') ? 'border-destructive focus-visible:ring-destructive' : ''}`}
                   value={data.status}
                   onChange={(e) => setData('status', e.target.value)}
                   aria-invalid={hasError('status')}

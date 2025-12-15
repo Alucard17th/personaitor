@@ -847,7 +847,7 @@ export default function PersonaBuilderPage() {
                                 </Label>
                                 <select
                                     id="level"
-                                    className="h-10 w-full rounded-md border px-3"
+                                    className="h-10 w-full rounded-md border border-foreground/30 bg-background px-3 outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 dark:border-foreground/40 dark:bg-input/30"
                                     value={level}
                                     onChange={(e) =>
                                         setLevel(
@@ -1071,14 +1071,13 @@ export default function PersonaBuilderPage() {
                                                     </Label>
                                                     <select
                                                         id="twt"
-                                                        className="h-8 w-full rounded-md border px-2 text-sm"
+                                                        className="h-8 w-full rounded-md border border-foreground/30 bg-background px-2 text-sm outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 dark:border-foreground/40 dark:bg-input/30"
                                                         value={titleWeight}
                                                         onChange={(e) =>
                                                             setTitleWeight(
-                                                                parseInt(
+                                                                Number(
                                                                     e.target
                                                                         .value,
-                                                                    10,
                                                                 ),
                                                             )
                                                         }
@@ -1105,7 +1104,7 @@ export default function PersonaBuilderPage() {
                                                     </Label>
                                                     <select
                                                         id="talign"
-                                                        className="h-8 w-full rounded-md border px-2 text-sm"
+                                                        className="h-8 w-full rounded-md border border-foreground/30 bg-background px-2 text-sm outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 dark:border-foreground/40 dark:bg-input/30"
                                                         value={titleAlign}
                                                         onChange={(e) =>
                                                             setTitleAlign(
