@@ -32,8 +32,50 @@
 
         <title inertia>{{ config('app.name', 'Laravel') }}</title>
 
+        @php
+            $seoTitle = $page['props']['seo']['title'] ?? config('app.name', 'Laravel');
+            $seoDescription = $page['props']['seo']['description'] ?? '';
+            $seoCanonical = $page['props']['seo']['canonical'] ?? url()->current();
+            $seoOgImage = $page['props']['seo']['ogImage'] ?? (rtrim(config('app.url'), '/') . '/personaitor.png');
+        @endphp
+
+        <link rel="canonical" href="{{ $seoCanonical }}">
+        <meta name="description" content="{{ $seoDescription }}">
+        <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+
+        <meta property="og:type" content="website">
+        <meta property="og:site_name" content="{{ config('app.name', 'Laravel') }}">
+        <meta property="og:title" content="{{ $seoTitle }}">
+        <meta property="og:description" content="{{ $seoDescription }}">
+        <meta property="og:url" content="{{ $seoCanonical }}">
+        <meta property="og:image" content="{{ $seoOgImage }}">
+
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="{{ $seoTitle }}">
+        <meta name="twitter:description" content="{{ $seoDescription }}">
+        <meta name="twitter:image" content="{{ $seoOgImage }}">
+
+        <script type="application/ld+json">{!! json_encode([
+            '@context' => 'https://schema.org',
+            '@graph' => [
+                [
+                    '@type' => 'WebSite',
+                    '@id' => rtrim(config('app.url'), '/').'/#website',
+                    'url' => rtrim(config('app.url'), '/').'/',
+                    'name' => config('app.name', 'Laravel'),
+                ],
+                [
+                    '@type' => 'Organization',
+                    '@id' => rtrim(config('app.url'), '/').'/#organization',
+                    'name' => config('app.name', 'Laravel'),
+                    'url' => rtrim(config('app.url'), '/').'/',
+                    'logo' => rtrim(config('app.url'), '/').'/favicon.png',
+                ],
+            ],
+        ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}</script>
+
         <link rel="icon" href="/favicon.png" sizes="any">
-        <link rel="icon" href="/favicon.png" type="image/svg+xml">
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml">
         <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
         <link rel="preconnect" href="https://fonts.bunny.net">

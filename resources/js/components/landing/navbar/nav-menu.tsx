@@ -1,8 +1,10 @@
 import {
     NavigationMenu,
+    NavigationMenuContent,
     NavigationMenuItem,
     NavigationMenuLink,
     NavigationMenuList,
+    NavigationMenuTrigger,
 } from '@/components/ui/navigation-menu';
 import { router } from '@inertiajs/react';
 import { NavigationMenuProps } from '@radix-ui/react-navigation-menu';
@@ -48,8 +50,13 @@ export const NavMenu = (props: NavigationMenuProps) => {
         });
     };
 
+    const handleVisit = (e: React.MouseEvent, href: string) => {
+        e.preventDefault();
+        router.visit(href);
+    };
+
     return (
-        <NavigationMenu {...props}>
+        <NavigationMenu viewport={false} {...props}>
             <NavigationMenuList className="gap-6 space-x-0 data-[orientation=vertical]:flex-col data-[orientation=vertical]:items-start">
                 {headerLinks.map(({ title, href }) => (
                     <NavigationMenuItem key={title}>
@@ -63,6 +70,36 @@ export const NavMenu = (props: NavigationMenuProps) => {
                         </NavigationMenuLink>
                     </NavigationMenuItem>
                 ))}
+
+                <NavigationMenuItem>
+                    <NavigationMenuTrigger>Free tools</NavigationMenuTrigger>
+                    <NavigationMenuContent>
+                        <div className="w-[240px] p-2">
+                            <NavigationMenuLink asChild>
+                                <a
+                                    href="/free/persona-builder"
+                                    onClick={(e) =>
+                                        handleVisit(e, '/free/persona-builder')
+                                    }
+                                    className="block rounded-sm p-2 text-sm hover:bg-accent hover:text-accent-foreground"
+                                >
+                                    Free Persona Builder
+                                </a>
+                            </NavigationMenuLink>
+                            <NavigationMenuLink asChild>
+                                <a
+                                    href="/free/utm-builder"
+                                    onClick={(e) =>
+                                        handleVisit(e, '/free/utm-builder')
+                                    }
+                                    className="block rounded-sm p-2 text-sm hover:bg-accent hover:text-accent-foreground"
+                                >
+                                    Free UTM Builder
+                                </a>
+                            </NavigationMenuLink>
+                        </div>
+                    </NavigationMenuContent>
+                </NavigationMenuItem>
             </NavigationMenuList>
         </NavigationMenu>
     );

@@ -39,12 +39,23 @@ class HandleInertiaRequests extends Middleware
     {
         [$message, $author] = str(Inspiring::quotes()->random())->explode('-');
 
+        $baseUrl = rtrim(config('app.url'), '/');
+        $canonicalUrl = $request->url();
+        $defaultOgImage = $baseUrl.'/personaitor.png';
+
         return [
             ...parent::share($request),
             'name' => config('app.name'),
             'quote' => ['message' => trim($message), 'author' => trim($author)],
             'auth' => [
                 'user' => $request->user(),
+            ],
+
+            'seo' => [
+                'title' => config('app.name'),
+                'description' => env('APP_DESCRIPTION', ''),
+                'canonical' => $canonicalUrl,
+                'ogImage' => $defaultOgImage,
             ],
 
             // SideBar State
