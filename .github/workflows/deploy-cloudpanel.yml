@@ -59,7 +59,7 @@ jobs:
           SSH_USER: ${{ secrets.SSH_USER }}
           DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
         run: |
-          rsync -az --delete --no-times --omit-dir-times \
+          rsync -az --delete --no-times --omit-dir-times --no-perms --no-owner --no-group \
             -e "ssh -p ${SSH_PORT}" \
             --exclude ".git/" \
             --exclude ".github/" \
