@@ -1,6 +1,7 @@
 name: Deploy to OVH VPS (CloudPanel)
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
