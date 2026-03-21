@@ -3,15 +3,15 @@
 declare(strict_types=1);
 
 return [
-    'route_prefix' => '_blogavel',
+    'route_prefix' => 'blogavel',
 
     'admin_prefix' => 'admin',
 
     'admin_middleware' => ['web', 'blogavel.admin'],
 
-    'manage_blog_gate' => false,
+    'manage_blog_gate' => (bool) env('BLOGAVEL_MANAGE_BLOG_GATE', false),
 
-    'manage_blog_allow_local' => true,
+    'manage_blog_allow_local' => (bool) env('BLOGAVEL_MANAGE_BLOG_ALLOW_LOCAL', true),
 
     'manage_blog_admin_emails' => array_values(array_filter(array_map('trim', explode(',', (string) env('BLOGAVEL_MANAGE_BLOG_ADMIN_EMAILS', ''))))),
 
