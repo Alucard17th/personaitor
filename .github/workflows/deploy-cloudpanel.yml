@@ -53,14 +53,15 @@ jobs:
           echo "${{ secrets.SSH_PRIVATE_KEY }}" | tr -d '\r' > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -p "${{ secrets.SSH_PORT }}" "${{ secrets.SSH_HOST }}" >> ~/.ssh/known_hosts
-          cat > ~/.ssh/config << 'EOF'
-          Host deploy-target
-            HostName ${SSH_HOST}
-            User ${SSH_USER}
-            Port ${SSH_PORT}
-            IdentityFile ~/.ssh/id_rsa
-            IdentitiesOnly yes
-          EOF
+          printf "%s\n" \
+            "Host deploy-target" \
+            "  HostName ${{ secrets.SSH_HOST }}" \
+            "  User ${{ secrets.SSH_USER }}" \
+            "  Port ${{ secrets.SSH_PORT }}" \
+            "  IdentityFile ~/.ssh/id_rsa" \
+            "  IdentitiesOnly yes" \
+            > ~/.ssh/config
+          chmod 600 ~/.ssh/config
 
       - name: Sync repo to server (rsync)
         env:
