@@ -10,10 +10,12 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "alucard17th/blogavel-pk": "^0.1.2",
         "inertiajs/inertia-laravel": "^2.0",
         "laravel/cashier-paddle": "^2.6",
         "laravel/fortify": "^1.30",
         "laravel/framework": "^12.0",
+        "laravel/sanctum": "^4.3",
         "laravel/socialite": "^5.23",
         "laravel/tinker": "^2.10.1",
         "laravel/wayfinder": "^0.1.9",

@@ -72,6 +72,17 @@ export const NavMenu = (props: NavigationMenuProps) => {
                 ))}
 
                 <NavigationMenuItem>
+                    <NavigationMenuLink asChild>
+                        <a
+                            href="/blog"
+                            onClick={(e) => handleVisit(e, '/blog')}
+                        >
+                            Blog
+                        </a>
+                    </NavigationMenuLink>
+                </NavigationMenuItem>
+
+                <NavigationMenuItem>
                     <NavigationMenuTrigger>Free tools</NavigationMenuTrigger>
                     <NavigationMenuContent>
                         <div className="w-[240px] p-2">

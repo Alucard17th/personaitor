@@ -5,5 +5,6 @@ Disallow: /register
 Disallow: /forgot-password
 Disallow: /reset-password
 Disallow: /user/
+Disallow: /_blogavel/
 
 Sitemap: /sitemap.xml

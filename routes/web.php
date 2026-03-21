@@ -10,6 +10,7 @@ use App\Http\Controllers\App\CategoryController;
 use App\Http\Controllers\App\CampaignController;
 use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\SubscriptionController;
+use App\Http\Controllers\BlogController;
 
 Route::get('/sitemap.xml', function () {
     $baseUrl = rtrim(config('app.url'), '/');
@@ -19,7 +20,27 @@ Route::get('/sitemap.xml', function () {
         '/privacy-policy',
         '/free/persona-builder',
         '/free/utm-builder',
+        '/blog',
     ];
+
+    try {
+        $posts = \Illuminate\Support\Facades\DB::table('blogavel_posts')
+            ->select(['slug', 'updated_at', 'published_at', 'status'])
+            ->where('status', 'published')
+            ->whereNotNull('published_at')
+            ->where('published_at', '<=', now())
+            ->orderByDesc('published_at')
+            ->get();
+
+        foreach ($posts as $post) {
+            if (!isset($post->slug) || $post->slug === '') {
+                continue;
+            }
+            $urls[] = '/blog/'.ltrim((string) $post->slug, '/');
+        }
+    } catch (\Throwable $e) {
+        // Ignore sitemap blog entries if blog tables are not available.
+    }
 
     $entries = collect($urls)->map(function (string $path) use ($baseUrl) {
         $loc = $baseUrl.$path;
@@ -35,6 +56,8 @@ Route::get('/sitemap.xml', function () {
 })->name('sitemap');
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
+Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('blog.show');
 Route::get('/terms', [HomeController::class, 'terms'])->name('terms');
 Route::get('privacy-policy', [HomeController::class, 'privacy'])->name('privacy');
 
