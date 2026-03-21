@@ -49,9 +49,18 @@ jobs:
       - name: Configure SSH
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 700 ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" | tr -d '\r' > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -p "${{ secrets.SSH_PORT }}" "${{ secrets.SSH_HOST }}" >> ~/.ssh/known_hosts
+          cat > ~/.ssh/config << 'EOF'
+          Host deploy-target
+            HostName ${SSH_HOST}
+            User ${SSH_USER}
+            Port ${SSH_PORT}
+            IdentityFile ~/.ssh/id_rsa
+            IdentitiesOnly yes
+          EOF
 
       - name: Sync repo to server (rsync)
         env:
@@ -61,7 +70,7 @@ jobs:
           DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
         run: |
           rsync -az --delete \
-            -e "ssh -p ${SSH_PORT}" \
+            -e "ssh -F ~/.ssh/config" \
             --exclude ".git/" \
             --exclude ".github/" \
             --exclude "node_modules/" \
@@ -70,7 +79,7 @@ jobs:
             --exclude ".env" \
             --exclude ".env.*" \
             --exclude "bootstrap/cache/*.php" \
-            ./ "${SSH_USER}@${SSH_HOST}:${DEPLOY_PATH}/"
+            ./ "deploy-target:${DEPLOY_PATH}/"
 
       - name: Run remote deploy script
         env:
@@ -79,4 +88,4 @@ jobs:
           SSH_USER: ${{ secrets.SSH_USER }}
           DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
         run: |
-          ssh -p "${SSH_PORT}" "${SSH_USER}@${SSH_HOST}" "bash -lc 'cd \"${DEPLOY_PATH}\" && chmod +x scripts/deploy_remote.sh && ./scripts/deploy_remote.sh'"
+          ssh -F ~/.ssh/config deploy-target "bash -lc 'cd \"${DEPLOY_PATH}\" && chmod +x scripts/deploy_remote.sh && ./scripts/deploy_remote.sh'"
