@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "alucard17th/blogavel-pk",
-            "version": "v0.1.6",
+            "version": "v0.1.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Alucard17th/blogavel-pk.git",
-                "reference": "6f5d30a64eb7f0fd815b237697937ad70746397b"
+                "reference": "0a21c7d9cf0bd778f012837efaf8839f0b359213"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Alucard17th/blogavel-pk/zipball/6f5d30a64eb7f0fd815b237697937ad70746397b",
-                "reference": "6f5d30a64eb7f0fd815b237697937ad70746397b",
+                "url": "https://api.github.com/repos/Alucard17th/blogavel-pk/zipball/0a21c7d9cf0bd778f012837efaf8839f0b359213",
+                "reference": "0a21c7d9cf0bd778f012837efaf8839f0b359213",
                 "shasum": ""
             },
             "require": {
@@ -58,9 +58,9 @@
             "description": "Blogavel - a blog/CMS package for Laravel.",
             "support": {
                 "issues": "https://github.com/Alucard17th/blogavel-pk/issues",
-                "source": "https://github.com/Alucard17th/blogavel-pk/tree/v0.1.6"
+                "source": "https://github.com/Alucard17th/blogavel-pk/tree/v0.1.7"
             },
-            "time": "2026-03-21T03:21:38+00:00"
+            "time": "2026-03-21T06:57:41+00:00"
         },
         {
             "name": "bacon/bacon-qr-code",
