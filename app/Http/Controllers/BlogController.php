@@ -2,26 +2,34 @@
 
 namespace App\Http\Controllers;
 
+use Blogavel\Blogavel\Models\Post;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 class BlogController extends Controller
 {
     public function index(Request $request)
     {
-        $posts = DB::table('blogavel_posts')
+        $posts = Post::query()
             ->select(['id', 'title', 'slug', 'content', 'published_at'])
             ->where('status', 'published')
             ->whereNotNull('published_at')
             ->where('published_at', '<=', now())
             ->orderByDesc('published_at')
             ->paginate(10)
-            ->through(function ($post) {
-                $plain = trim(preg_replace('/\s+/', ' ', strip_tags((string) ($post->content ?? ''))));
-                $post->excerpt = mb_substr($plain, 0, 160);
-                unset($post->content);
-                return $post;
+            ->through(function (Post $post) {
+                $decoded = html_entity_decode((string) ($post->content ?? ''), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+                $decoded = str_replace("\xC2\xA0", ' ', $decoded);
+                $plain = trim(preg_replace('/\s+/u', ' ', strip_tags($decoded)));
+
+                return [
+                    'id' => $post->id,
+                    'title' => $post->title,
+                    'slug' => $post->slug,
+                    'excerpt' => mb_substr($plain, 0, 160),
+                    'published_at' => $post->published_at,
+                ];
             });
 
         return Inertia::render('blog/index', [
@@ -35,19 +43,21 @@ class BlogController extends Controller
 
     public function show(Request $request, string $slug)
     {
-        $post = DB::table('blogavel_posts')
-            ->select(['id', 'title', 'slug', 'content', 'published_at'])
+        $post = Post::query()
+            ->with('featuredMedia:id,disk,path')
             ->where('slug', $slug)
             ->where('status', 'published')
             ->whereNotNull('published_at')
             ->where('published_at', '<=', now())
-            ->first();
+            ->firstOrFail();
 
-        if (! $post) {
-            abort(404);
-        }
+        $featuredImageUrl = $post->featuredMedia
+            ? Storage::disk((string) ($post->featuredMedia->disk ?: 'public'))->url((string) $post->featuredMedia->path)
+            : null;
 
-        $plain = trim(preg_replace('/\s+/', ' ', strip_tags((string) ($post->content ?? ''))));
+        $decoded = html_entity_decode((string) ($post->content ?? ''), ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        $decoded = str_replace("\xC2\xA0", ' ', $decoded);
+        $plain = trim(preg_replace('/\s+/u', ' ', strip_tags($decoded)));
         $description = mb_substr($plain, 0, 160);
 
         return Inertia::render('blog/show', [
@@ -55,7 +65,9 @@ class BlogController extends Controller
                 'title' => (string) $post->title,
                 'description' => $description,
             ],
-            'post' => $post,
+            'post' => array_merge($post->toArray(), [
+                'featured_image_url' => $featuredImageUrl,
+            ]),
         ]);
     }
 }
