@@ -4,6 +4,15 @@ set -euo pipefail
 DEPLOY_PATH="${DEPLOY_PATH:-$(pwd)}"
 cd "$DEPLOY_PATH"
 
+if [ ! -d .git ]; then
+  echo "${DEPLOY_PATH} is not a git repository (.git not found)." >&2
+  echo "This deploy strategy expects the server directory to be a git clone." >&2
+  exit 1
+fi
+
+git fetch --all --prune
+git reset --hard origin/main
+
 mkdir -p storage/framework/{cache,sessions,views} storage/logs bootstrap/cache
 chmod -R ug+rwX storage bootstrap/cache || true
 
