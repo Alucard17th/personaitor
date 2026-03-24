@@ -53,6 +53,10 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -p "${{ secrets.SSH_PORT }}" "${{ secrets.SSH_HOST }}" >> ~/.ssh/known_hosts
 
+      - name: Show deploy key fingerprint
+        run: |
+          ssh-keygen -lf ~/.ssh/id_rsa
+
       - name: Test SSH connectivity
         env:
           SSH_HOST: ${{ secrets.SSH_HOST }}
@@ -60,6 +64,15 @@ jobs:
           SSH_USER: ${{ secrets.SSH_USER }}
         run: |
           ssh -i ~/.ssh/id_rsa -o IdentitiesOnly=yes -o BatchMode=yes -p "${SSH_PORT}" "${SSH_USER}@${SSH_HOST}" "echo SSH_OK"
+
+      - name: SSH debug probe (if auth fails)
+        if: ${{ failure() }}
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_PORT: ${{ secrets.SSH_PORT }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+        run: |
+          ssh -vvv -i ~/.ssh/id_rsa -o IdentitiesOnly=yes -p "${SSH_PORT}" "${SSH_USER}@${SSH_HOST}" "echo SSH_OK" || true
 
       - name: Upload built assets only (public/build)
         env:
