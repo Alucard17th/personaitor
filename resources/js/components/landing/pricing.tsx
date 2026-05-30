@@ -48,8 +48,29 @@ const Pricing: React.FC<PricingProps> = ({ plans }) => {
         null,
     );
     const [showLoginModal, setShowLoginModal] = React.useState(false);
+    const [authMode, setAuthMode] = React.useState<'login' | 'signup'>('login');
 
     const list = Array.isArray(plans) ? plans : [];
+
+    const listWithFree = React.useMemo(() => {
+        const hasFree = list.some((p) => (Number(p.price) || 0) <= 0);
+        if (hasFree) return list;
+
+        const freePlan: Plan = {
+            id: 'free',
+            name: 'Free',
+            description: 'Generate 1 persona free after signup.',
+            price: 0,
+            is_popular: false,
+            features: [
+                { title: '1 persona generation credit' },
+                { title: 'Pains, triggers, objections, and angles' },
+                { title: 'Export & editing in the builder' },
+            ],
+        };
+
+        return [freePlan, ...list];
+    }, [list]);
 
     // Listen for Google popup login success
     React.useEffect(() => {
@@ -110,8 +131,20 @@ const Pricing: React.FC<PricingProps> = ({ plans }) => {
     };
 
     const handleSubscribeClick = (plan: Plan) => {
+        const basePrice = Number(plan.price) || 0;
+        if (basePrice <= 0) {
+            if (user) {
+                router.visit('/app/personas/create');
+                return;
+            }
+            setCheckoutPlanId(null);
+            setAuthMode('signup');
+            setShowLoginModal(true);
+            return;
+        }
         if (!user) {
             setCheckoutPlanId(plan.paddle_price_id || null);
+            setAuthMode('login');
             setShowLoginModal(true);
             return;
         }
@@ -127,13 +160,24 @@ const Pricing: React.FC<PricingProps> = ({ plans }) => {
     };
 
     return (
-        <div
+        <section
             id="pricing"
-            className="flex flex-col items-center justify-center px-6 pb-16 md:pb-16 flex flex-col items-center justify-center text-center"
+            aria-labelledby="pricing-heading"
+            className="flex flex-col items-center justify-center px-6 pb-16 md:pb-16 text-center"
         >
-            <h2 className="mt-4 text-3xl font-semibold tracking-tight sm:text-4xl">
+            <Badge variant="secondary" className="rounded-full">
                 Pricing
+            </Badge>
+            <h2
+                id="pricing-heading"
+                className="mt-4 text-3xl font-semibold tracking-tight sm:text-4xl"
+            >
+                Simple, transparent pricing
             </h2>
+            <p className="mt-3 max-w-[60ch] text-[var(--muted-foreground)]">
+                Start free. Upgrade only when personas start paying for themselves in clearer copy,
+                better ads, and higher conversions.
+            </p>
 
             <Tabs
                 value={selectedBillingPeriod}
@@ -153,9 +197,10 @@ const Pricing: React.FC<PricingProps> = ({ plans }) => {
                 </TabsList>
             </Tabs>
 
-            <div className="mx-auto mt-12 grid max-w-7xl grid-cols-1 gap-6 text-center md:grid-cols-3 lg:grid-cols-3 px-8">
-                {list.map((plan) => {
+            <div className="mx-auto mt-12 grid max-w-7xl grid-cols-1 gap-6 text-center md:grid-cols-2 lg:grid-cols-4 px-8">
+                {listWithFree.map((plan) => {
                     const basePrice = Number(plan.price) || 0;
+                    const isFree = basePrice <= 0;
                     const displayPrice =
                         selectedBillingPeriod === 'monthly'
                             ? basePrice
@@ -179,6 +224,11 @@ const Pricing: React.FC<PricingProps> = ({ plans }) => {
                                     Most Popular
                                 </Badge>
                             )}
+                            {!plan.is_popular && isFree && (
+                                <Badge variant="secondary" className="absolute top-0 right-1/2 translate-x-1/2 -translate-y-1/2">
+                                    Free
+                                </Badge>
+                            )}
 
                             <h3 className="text-lg font-medium">{plan.name}</h3>
                             <p className="mt-2 text-4xl font-bold">
@@ -195,11 +245,11 @@ const Pricing: React.FC<PricingProps> = ({ plans }) => {
                             <ul className="mt-6 flex-1 space-y-1">
                                 {plan.features?.map((feature: any) => (
                                     <li
-                                        key={feature}
+                                        key={feature?.title ?? String(feature)}
                                         className="flex items-start gap-2 text-sm leading-6"
                                     >
                                         <Check className="mt-1 h-4 w-4 text-dark-600" />
-                                        <span>{feature}</span>
+                                        <span>{feature?.title ?? String(feature)}</span>
                                         {feature.tooltip && (
                                             <Tooltip>
                                                 <TooltipTrigger className="cursor-help">
@@ -223,34 +273,62 @@ const Pricing: React.FC<PricingProps> = ({ plans }) => {
                                         : 'border bg-black text-white hover:bg-gray-100 hover:text-black',
                                 )}
                             >
-                                {plan.is_popular
-                                    ? 'Choose Popular Plan'
-                                    : 'Start Free Trial'}
+                                {isFree
+                                    ? 'Get 1 free persona'
+                                    : plan.is_popular
+                                      ? 'Choose Popular Plan'
+                                      : 'Start Free Trial'}
                             </Button>
                         </div>
                     );
                 })}
             </div>
 
+            <p className="mt-6 text-xs text-[var(--muted-foreground)]">
+                No credit card required to start • Cancel anytime • Secure checkout
+            </p>
+
             {/* Login Modal */}
             <Dialog open={showLoginModal} onOpenChange={setShowLoginModal}>
                 <DialogContent className="w-full sm:max-w-md">
                     <DialogHeader>
-                        <DialogTitle>Login to Subscribe</DialogTitle>
+                        <DialogTitle>
+                            {authMode === 'login'
+                                ? 'Login to Subscribe'
+                                : 'Create an account'}
+                        </DialogTitle>
                     </DialogHeader>
-                    <LoginForm
-                        checkoutPlanId={checkoutPlanId}
-                        onSuccess={handleLoginSuccess}
-                    />
+                    {authMode === 'login' ? (
+                        <LoginForm
+                            checkoutPlanId={checkoutPlanId}
+                            onSuccess={handleLoginSuccess}
+                            onSignup={() => {
+                                setAuthMode('signup');
+                            }}
+                        />
+                    ) : (
+                        <RegisterForm
+                            checkoutPlanId={checkoutPlanId}
+                            onSuccess={() => {
+                                setShowLoginModal(false);
+                                setAuthMode('login');
+                            }}
+                            onLogin={() => setAuthMode('login')}
+                        />
+                    )}
                 </DialogContent>
             </Dialog>
-        </div>
+        </section>
     );
 };
 
-type LoginFormProps = { onSuccess: () => void; checkoutPlanId?: string | null };
+type LoginFormProps = {
+    onSuccess: () => void;
+    onSignup: () => void;
+    checkoutPlanId?: string | null;
+};
 
-const LoginForm: React.FC<LoginFormProps> = ({ onSuccess, checkoutPlanId }) => {
+const LoginForm: React.FC<LoginFormProps> = ({ onSuccess, onSignup, checkoutPlanId }) => {
     const { data, setData, post, processing, errors } = useForm({
         email: '',
         password: '',
@@ -308,6 +386,107 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSuccess, checkoutPlanId }) => {
                 <img src="/images/google-logo.svg" className="h-5 w-5" />
                 Continue with Google
             </Button>
+
+            <button
+                type="button"
+                onClick={onSignup}
+                className="text-sm text-muted-foreground underline underline-offset-4"
+            >
+                Don’t have an account? Sign up
+            </button>
+        </div>
+    );
+};
+
+type RegisterFormProps = {
+    onSuccess: () => void;
+    onLogin: () => void;
+    checkoutPlanId?: string | null;
+};
+
+const RegisterForm: React.FC<RegisterFormProps> = ({
+    onSuccess,
+    onLogin,
+    checkoutPlanId,
+}) => {
+    const { data, setData, post, processing, errors } = useForm<{
+        name: string;
+        email: string;
+        password: string;
+        password_confirmation: string;
+        from_pricing_modal: string;
+    }>({
+        name: '',
+        email: '',
+        password: '',
+        password_confirmation: '',
+        from_pricing_modal: '1',
+    });
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        if (checkoutPlanId)
+            sessionStorage.setItem('from_pricing_plan_id', checkoutPlanId);
+        post('/register', { onSuccess });
+    };
+
+    return (
+        <div className="flex flex-col gap-4">
+            <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+                <Input
+                    type="text"
+                    placeholder="Name"
+                    name="name"
+                    value={data.name}
+                    onChange={(e) => setData('name', e.target.value)}
+                    required
+                />
+                <InputError message={errors.name} />
+
+                <Input
+                    type="email"
+                    placeholder="Email"
+                    name="email"
+                    value={data.email}
+                    onChange={(e) => setData('email', e.target.value)}
+                    required
+                />
+                <InputError message={errors.email} />
+
+                <Input
+                    type="password"
+                    placeholder="Password"
+                    name="password"
+                    value={data.password}
+                    onChange={(e) => setData('password', e.target.value)}
+                    required
+                />
+                <InputError message={errors.password} />
+
+                <Input
+                    type="password"
+                    placeholder="Confirm password"
+                    name="password_confirmation"
+                    value={data.password_confirmation}
+                    onChange={(e) =>
+                        setData('password_confirmation', e.target.value)
+                    }
+                    required
+                />
+                <InputError message={errors.password_confirmation} />
+
+                <Button type="submit" disabled={processing}>
+                    {processing ? 'Creating…' : 'Create account'}
+                </Button>
+            </form>
+
+            <button
+                type="button"
+                onClick={onLogin}
+                className="text-sm text-muted-foreground underline underline-offset-4"
+            >
+                Already have an account? Log in
+            </button>
         </div>
     );
 };

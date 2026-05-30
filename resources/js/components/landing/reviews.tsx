@@ -55,16 +55,16 @@ const Reviews3: React.FC = () => {
       />
 
       <div className="mb-8">
-        <Badge variant="secondary" className="rounded-full">What customers say</Badge>
+        <Badge variant="secondary" className="rounded-full">Trusted by SaaS &amp; marketing teams</Badge>
         <h2
           id="reviews-heading"
           className="mt-4 text-3xl font-semibold tracking-tight sm:text-4xl"
         >
-          Teams ship faster with PERSONAAITOR
+          Why product and marketing teams choose Personaitor
         </h2>
         <p className="mt-3 max-w-[72ch] text-[var(--muted-foreground)]">
-          Real outcomes from product, UX, and growth leaders using AI personas to guide roadmaps,
-          experiences, and campaigns.
+          From indie SaaS founders to enterprise growth teams — see how AI-generated buyer
+          personas are sharpening positioning, accelerating onboarding, and lifting paid-ad ROAS.
         </p>
       </div>
 
@@ -175,7 +175,7 @@ const Reviews3: React.FC = () => {
       {/* Bridge CTA to next section (3 PAIN POINTS) */}
       <div className="mt-8">
         <Link href="#pain">
-          <Button className="rounded-full">See the 3 problems we fix</Button>
+          <Button className="rounded-full">See the 3 reasons buyer personas fail</Button>
         </Link>
       </div>
     </section>

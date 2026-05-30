@@ -64,8 +64,10 @@ Route::get('privacy-policy', [HomeController::class, 'privacy'])->name('privacy'
 Route::get('/free/persona-builder', function () {
     return Inertia::render('free/persona-builder', [
         'seo' => [
-            'title' => 'Free Persona Builder',
-            'description' => 'Create and export a marketing persona manually. No account required.',
+            'title' => 'Free Buyer Persona Builder — Drag & Drop Persona Maker | Personaitor',
+            'description' => 'Build, customize and export a marketing persona for free. Drag-and-drop canvas, theming, PNG/PDF export — no sign-up required. Perfect for founders, marketers, and UX teams.',
+            'keywords' => 'free persona builder, buyer persona generator, marketing persona maker, user persona template, ICP builder, free persona canvas, persona export',
+            'canonical' => url('/free/persona-builder'),
         ],
     ]);
 })->name('free.persona-builder');
@@ -73,8 +75,10 @@ Route::get('/free/persona-builder', function () {
 Route::get('/free/utm-builder', function () {
     return Inertia::render('free/utm-builder', [
         'seo' => [
-            'title' => 'Free UTM Builder',
-            'description' => 'Build tracked URLs with UTM parameters for analytics. No sign-in required.',
+            'title' => 'Free UTM Builder — Generate Tracked Campaign URLs | Personaitor',
+            'description' => 'Build clean, tracked URLs with utm_source, utm_medium, utm_campaign, utm_term and utm_content. Free UTM link generator for Google Analytics, GA4, ads and email — no sign-up required.',
+            'keywords' => 'free UTM builder, UTM link generator, campaign URL builder, utm_source, utm_medium, utm_campaign, GA4 UTM, Google Analytics tracking URL',
+            'canonical' => url('/free/utm-builder'),
         ],
     ]);
 })->name('free.utm-builder');

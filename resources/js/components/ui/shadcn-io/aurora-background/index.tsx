@@ -15,11 +15,10 @@ export const AuroraBackground = ({
   ...props
 }: AuroraBackgroundProps) => {
   return (
-    <main>
-      <div
+    <div
         className={cn(
           // use your tokens for base canvas & text
-          "relative flex h-[100vh] flex-col items-center justify-center bg-[var(--background)] text-[var(--foreground)]",
+          "relative flex w-full flex-col bg-[var(--background)] text-[var(--foreground)]",
           className
         )}
         {...props}
@@ -92,8 +91,7 @@ export const AuroraBackground = ({
         </div>
 
         {/* content above the background */}
-        <div className="relative z-10">{children}</div>
+        <div className="relative z-10 w-full">{children}</div>
       </div>
-    </main>
   );
 };

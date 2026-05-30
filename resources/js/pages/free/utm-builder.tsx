@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Head } from '@inertiajs/react';
 import { toast } from 'sonner';
 import React, { useMemo, useState } from 'react';
 
@@ -58,19 +59,44 @@ export default function FreeUtmBuilder() {
         }
     };
 
+    const softwareJsonLd = {
+        '@context': 'https://schema.org',
+        '@type': 'SoftwareApplication',
+        name: 'Free UTM Builder',
+        applicationCategory: 'BusinessApplication',
+        operatingSystem: 'Web',
+        description:
+            'Free UTM link generator for Google Analytics (GA4), paid ads and email. Build clean tracked URLs with utm_source, utm_medium, utm_campaign, utm_term and utm_content.',
+        offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    };
+
     return (
         <>
+            <Head>
+                <meta name="robots" content="index,follow" />
+            </Head>
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareJsonLd) }}
+            />
             <Navbar />
             <main className="xs:pt-20 px-6 pt-16 sm:pt-24 md:px-12 lg:px-24">
                 <div className="mx-auto max-w-3xl space-y-6">
-                    <div className="space-y-1">
-                        <h1 className="text-2xl font-semibold">
-                            Free UTM Builder
+                    <header className="space-y-3">
+                        <span className="inline-flex items-center rounded-full border bg-muted/40 px-3 py-1 text-xs font-medium">
+                            Free tool · No signup
+                        </span>
+                        <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
+                            Free UTM Builder — generate tracked campaign URLs
                         </h1>
-                        <p className="text-sm text-muted-foreground">
-                            Build tracked URLs for analytics. No sign-in required.
+                        <p className="max-w-[68ch] text-muted-foreground">
+                            Build clean, analytics-ready URLs with <code>utm_source</code>,{' '}
+                            <code>utm_medium</code>, <code>utm_campaign</code>,{' '}
+                            <code>utm_term</code> and <code>utm_content</code>. Perfect for Google
+                            Analytics (GA4), Facebook/LinkedIn ads, newsletter campaigns and SaaS
+                            growth experiments — no sign-in required.
                         </p>
-                    </div>
+                    </header>
 
                     <Card>
                         <CardHeader className="pb-2">

@@ -15,16 +15,17 @@ const ProductInAction = () => {
     >
       {/* Header */}
       <div className="mb-8">
-        <Badge variant="secondary" className="rounded-full">Product in Action</Badge>
+        <Badge variant="secondary" className="rounded-full">AI persona generator · live demo</Badge>
         <h2
           id="product-in-action-heading"
           className="mt-4 text-3xl font-semibold tracking-tight sm:text-4xl"
         >
-          See PERSONAAITOR do the work—for you
+          Generate a complete buyer persona from one prompt
         </h2>
         <p className="mt-3 max-w-[72ch] text-[var(--muted-foreground)]">
-          Turn messy notes, interview snippets, or a quick brief into a complete, research-backed
-          persona—pains, JTBD, triggers, objections, and messaging angles included.
+          Paste interview notes, a survey export, or a one-line product idea. Personaitor turns
+          raw input into a structured customer persona — demographics, JTBD, pains, triggers,
+          objections, and ready-to-test messaging angles — all sourced and editable.
         </p>
       </div>
 

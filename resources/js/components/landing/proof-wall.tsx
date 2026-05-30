@@ -55,15 +55,17 @@ const ProofWall: React.FC = () => {
       />
 
       <div className="mb-8">
-        <Badge variant="secondary" className="rounded-full">Proof</Badge>
+        <Badge variant="secondary" className="rounded-full">Case studies</Badge>
         <h2
           id="proof-heading"
           className="mt-4 text-3xl font-semibold tracking-tight sm:text-4xl"
         >
-          From guesswork to personas that ship
+          Real teams. Real personas. Measurable revenue impact.
         </h2>
         <p className="mt-3 max-w-[72ch] text-[var(--muted-foreground)]">
-          Real customer stories—problem, plays we ran, and the measurable outcomes.
+          See how SaaS, FinTech, and data companies use Personaitor to replace guesswork
+          with evidence-backed buyer personas — and the conversion lift, faster onboarding,
+          and shorter sales cycles that followed.
         </p>
       </div>
 
@@ -264,7 +266,7 @@ const ProofWall: React.FC = () => {
 
       {/* Why folks choose us */}
       <div className="mt-10">
-        <h3 className="text-xl font-semibold tracking-tight">Why teams choose PERSONAAITOR</h3>
+        <h3 className="text-xl font-semibold tracking-tight">Why teams pick Personaitor over DIY persona templates</h3>
         <ul className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           <li className="rounded-xl border p-3 text-sm">
             <span className="font-medium">Accuracy</span>

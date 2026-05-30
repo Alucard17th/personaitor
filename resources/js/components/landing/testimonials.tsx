@@ -7,57 +7,57 @@ import { ComponentProps } from "react";
 const testimonials = [
   {
     id: 1,
-    name: "Sarah Thompson",
-    designation: "Product Manager",
-    company: "NextWave Labs",
+    name: "SaaS landing page rewrite",
+    designation: "Indie hacker",
+    company: "Pre-launch",
     testimonial:
-      "Persona Generator has completely changed how we approach user research. We can now generate accurate personas in minutes, saving hours of manual work.",
-    avatar: "https://randomuser.me/api/portraits/women/44.jpg",
+      "Started with a vague idea and ended with a persona + objections list. Used it to rewrite the hero + pricing copy and ship an A/B test the same day.",
+    avatar: "/img/persona-1.png",
   },
   {
     id: 2,
-    name: "David Kim",
-    designation: "Marketing Lead",
-    company: "BrightMark Agency",
+    name: "Paid ads targeting",
+    designation: "Growth",
+    company: "SaaS",
     testimonial:
-      "The AI-powered personas give us deep insights into our audience. Campaign targeting has never been easier or more precise.",
-    avatar: "https://randomuser.me/api/portraits/men/31.jpg",
+      "Used the persona’s pains + triggers to build 3 ad angles and 2 audiences. It turned ‘target everyone’ into a focused first campaign.",
+    avatar: "/img/persona-1.png",
   },
   {
     id: 3,
-    name: "Laura Chen",
-    designation: "UX Designer",
-    company: "PixelCraft Studio",
+    name: "Onboarding + activation",
+    designation: "Product",
+    company: "B2B",
     testimonial:
-      "Generating user personas on the fly lets me design interfaces that truly resonate with users. It’s like having a mini research team in my pocket.",
-    avatar: "https://randomuser.me/api/portraits/women/22.jpg",
+      "Mapped JTBD + objections into onboarding steps and tooltips. It gave us a concrete checklist for the first-run experience.",
+    avatar: "/img/persona-1.png",
   },
   {
     id: 4,
-    name: "Ahmed Hassan",
-    designation: "Founder & CEO",
-    company: "StartSmart",
+    name: "Roadmap alignment",
+    designation: "Founder",
+    company: "Bootstrapped",
     testimonial:
-      "Persona Generator helped us understand our early adopters and refine our product roadmap. We launched with confidence knowing our features matched real user needs.",
-    avatar: "https://randomuser.me/api/portraits/men/18.jpg",
+      "Turned feature debates into ‘which job are we solving?’ decisions. The persona became the shared reference point across product and marketing.",
+    avatar: "/img/persona-1.png",
   },
   {
     id: 5,
-    name: "Isabella Garcia",
-    designation: "Growth Strategist",
-    company: "ScaleUp Agency",
+    name: "Cold email positioning",
+    designation: "Sales",
+    company: "Outbound",
     testimonial:
-      "With clear personas generated in seconds, our ad campaigns now convert at a much higher rate. The insights are actionable and precise.",
-    avatar: "https://randomuser.me/api/portraits/women/35.jpg",
+      "Pulled ‘language they use’ + objections into email variants. It sped up message testing and made follow-ups more specific.",
+    avatar: "/img/persona-1.png",
   },
   {
     id: 6,
-    name: "Michael Brown",
-    designation: "Product Designer",
-    company: "Creative Loop",
+    name: "Investor deck clarity",
+    designation: "Founder",
+    company: "Pitching",
     testimonial:
-      "I can iterate on designs faster because I understand the user personas better. This tool bridges the gap between assumptions and real insights.",
-    avatar: "https://randomuser.me/api/portraits/men/27.jpg",
+      "Used the persona to tighten ‘who we’re for’ and ‘why now’ slides. It forced clarity on ICP and the core problem.",
+    avatar: "/img/persona-1.png",
   },
 ];
 
@@ -69,17 +69,18 @@ const Testimonials = () => (
   >
     <div className="mb-8">
       <Badge variant="secondary" className="rounded-full">
-        Customer love
+        AI persona use cases
       </Badge>
       <h2
         id="testimonials-heading"
         className="mt-4 text-3xl font-semibold tracking-tight sm:text-4xl"
       >
-        “This actually ships work”
+        What you can do with an AI-generated buyer persona
       </h2>
       <p className="mt-3 mx-auto max-w-[72ch] text-[var(--muted-foreground)]">
-        Long-form pull-quotes with the KPIs that matter—speed to insight,
-        alignment, and outcomes.
+        Rewrite landing page copy, brief paid-ad campaigns, sharpen cold outreach, design
+        onboarding flows, align your roadmap, and pitch investors — all powered by one
+        structured customer persona generated in minutes.
       </p>
     </div>
 

@@ -14,15 +14,17 @@ const PainPoints3 = () => {
       aria-labelledby="pain-heading"
     >
       <div className="mb-8">
-        <Badge variant="secondary" className="rounded-full">The 3 Pain Points</Badge>
+        <Badge variant="secondary" className="rounded-full">Why most buyer personas fail</Badge>
         <h2
           id="pain-heading"
           className="mt-4 text-3xl font-semibold tracking-tight sm:text-4xl"
         >
-          The real reasons personas don’t move the needle
+          Why traditional buyer personas don’t convert
         </h2>
         <p className="mt-3 max-w-[72ch] text-[var(--muted-foreground)]">
-          If any of these sting, PERSONAAITOR was built for you.
+          If your customer personas live in dusty Google Docs, look pretty but don’t drive copy,
+          or get forgotten the day after the workshop — you’re not alone. Here are the three
+          reasons most marketing personas quietly fail, and what to do instead.
         </p>
       </div>
 
@@ -36,7 +38,7 @@ const PainPoints3 = () => {
             <CardHeader className="flex items-start gap-3">
               <Brain className="mt-1 h-5 w-5 shrink-0" aria-hidden="true" />
               <CardTitle asChild>
-                <h3 className="text-base">Pain #1 — Guesswork & bias</h3>
+                <h3 className="text-base">#1 — Guesswork beats real customer research</h3>
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-3 text-sm text-[var(--muted-foreground)]">
@@ -53,7 +55,7 @@ const PainPoints3 = () => {
             <CardHeader className="flex items-start gap-3">
               <ListChecks className="mt-1 h-5 w-5 shrink-0" aria-hidden="true" />
               <CardTitle asChild>
-                <h3 className="text-base">Pain #2 — Pretty, but useless</h3>
+                <h3 className="text-base">#2 — Pretty persona decks, zero impact on copy</h3>
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-3 text-sm text-[var(--muted-foreground)]">
@@ -70,7 +72,7 @@ const PainPoints3 = () => {
             <CardHeader className="flex items-start gap-3">
               <Share2 className="mt-1 h-5 w-5 shrink-0" aria-hidden="true" />
               <CardTitle asChild>
-                <h3 className="text-base">Pain #3 — Stale & siloed</h3>
+                <h3 className="text-base">#3 — Stale, siloed personas your team ignores</h3>
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-3 text-sm text-[var(--muted-foreground)]">
@@ -86,7 +88,7 @@ const PainPoints3 = () => {
       <div className="mt-8">
         <Link href="#solve">
           <Button size="lg" className="rounded-full">
-            Okay—so how do we fix this?
+            See how Personaitor fixes this →
           </Button>
         </Link>
       </div>

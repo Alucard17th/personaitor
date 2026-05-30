@@ -34,21 +34,25 @@ class RegisteredUserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|lowercase|email|max:255|unique:'.User::class,
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'from_pricing_modal' => ['nullable'],
         ]);
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'quantity' => 1,
         ]);
-
-        $user->update(['quantity' => 10]);
 
         event(new Registered($user));
 
         Auth::login($user);
 
         $request->session()->regenerate();
+
+        if ($request->boolean('from_pricing_modal')) {
+            return redirect()->route('home');
+        }
 
         return redirect()->intended(route('dashboard', absolute: false));
     }

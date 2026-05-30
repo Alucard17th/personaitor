@@ -21,16 +21,17 @@ const Solve = () => {
       aria-labelledby="solve-heading"
     >
       <div className="mb-8">
-        <Badge variant="secondary" className="rounded-full">How we solve those issues</Badge>
+        <Badge variant="secondary" className="rounded-full">The Personaitor method</Badge>
         <h2
           id="solve-heading"
           className="mt-4 text-3xl font-semibold tracking-tight sm:text-4xl"
         >
-          From pains to predictable outcomes
+          Turn customer research into buyer personas that drive revenue
         </h2>
         <p className="mt-3 max-w-[72ch] text-[var(--muted-foreground)]">
-          PERSONAAITOR turns scattered research into living, actionable personas—so PM, UX, and growth
-          can ship with confidence.
+          Personaitor is the AI persona generator built for go-to-market teams. We replace
+          guesswork with evidence, slides with shippable briefs, and stale PDFs with a living
+          source of truth your whole company can use.
         </p>
       </div>
 

@@ -14,8 +14,9 @@ class HomeController extends Controller
         $products = Product::all();
         return Inertia::render('home/index', [
             'seo' => [
-                'title' => 'Personaitor',
-                'description' => 'Build marketing personas, plan campaigns, and generate messaging faster with Personaitor.',
+                'title' => 'Personaitor — AI Persona Generator for SaaS, UX & Marketing',
+                'description' => 'Turn a rough idea into a high-converting buyer persona in 30 seconds. Get pains, triggers, objections, JTBD and ad angles to power landing pages, onboarding, and paid campaigns.',
+                'keywords' => 'AI persona generator, buyer persona, ICP, user persona, marketing persona, SaaS personas, customer avatar, JTBD, ad targeting, landing page copy',
             ],
             'plans' => $products
         ]);

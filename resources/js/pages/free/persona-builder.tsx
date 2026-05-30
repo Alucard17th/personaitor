@@ -601,20 +601,40 @@ export default function FreePersonaBuilder() {
         toast.success('Reset');
     };
 
+    const softwareJsonLd = {
+        '@context': 'https://schema.org',
+        '@type': 'SoftwareApplication',
+        name: 'Free Buyer Persona Builder',
+        applicationCategory: 'BusinessApplication',
+        operatingSystem: 'Web',
+        description:
+            'Free drag-and-drop buyer persona builder for marketers, founders and UX teams. Customize a persona canvas and export to PNG, PDF or JSON — no sign-up required.',
+        offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    };
+
     return (
         <>
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareJsonLd) }}
+            />
             <Navbar />
             <main className="xs:pt-20 px-6 pt-16 sm:pt-24 md:px-12 lg:px-24">
                 <div className="mx-auto max-w-6xl space-y-6">
-                    <div className="flex flex-col gap-2">
-                        <h1 className="text-2xl font-semibold">
-                            Free Persona Builder
+                    <header className="flex flex-col gap-3">
+                        <span className="inline-flex w-fit items-center rounded-full border bg-muted/40 px-3 py-1 text-xs font-medium">
+                            Free tool · No signup
+                        </span>
+                        <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
+                            Free Buyer Persona Builder — drag, design &amp; export
                         </h1>
-                        <p className="text-sm text-muted-foreground">
-                            Create and export a persona manually. No account
-                            required.
+                        <p className="max-w-[72ch] text-muted-foreground">
+                            Build a high-fidelity marketing persona for free. Drag-and-drop layout,
+                            full theming controls, and one-click export to PNG, PDF or JSON.
+                            Designed for founders, growth marketers, UX researchers and agencies
+                            who need a shareable customer persona without an account.
                         </p>
-                    </div>
+                    </header>
 
                     <Card>
                         <CardHeader className="pb-2">

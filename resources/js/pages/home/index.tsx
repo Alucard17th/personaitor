@@ -60,16 +60,22 @@ export default function Home({ plans: plans }: PageProps) {
 
     return (
         <>
+            <a
+                href="#main-content"
+                className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-black focus:px-3 focus:py-2 focus:text-white"
+            >
+                Skip to main content
+            </a>
             <Navbar />
-            <main className="/*pt-16 xs:pt-20 sm:pt-24*/ main">
+            <main id="main-content" className="/*pt-16 xs:pt-20 sm:pt-24*/ main">
                 {/* 1) Hero */}
                 <Hero />
-                {/* 2) Product in Action */}
-                <ProductInAction />
-                {/* 3) 3 REVIEWS */}
-                <Reviews3 />
-                {/* 4) 3 PAIN POINTS (make it hurt) */}
+                {/* 2) 3 PAIN POINTS (make it hurt) */}
                 <PainPoints3 />
+                {/* 3) Product in Action */}
+                <ProductInAction />
+                {/* 4) 3 REVIEWS */}
+                <Reviews3 />
                 {/* 5) How we solve those issues */}
                 <Solve />
                 {/* 6) Reviews in a different format */}

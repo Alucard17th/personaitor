@@ -35,11 +35,12 @@ const HowAndIndustries = () => {
           id="how-heading"
           className="mt-4 text-3xl font-semibold tracking-tight sm:text-4xl"
         >
-          From raw inputs to personas your team can ship with
+          How to create an AI buyer persona in 3 steps
         </h2>
         <p className="mt-3 max-w-[72ch] text-[var(--muted-foreground)]">
-          PERSONAAITOR converts interviews, surveys, CRM notes, and briefs into living personas—
-          complete with pains, JTBD, triggers, objections, and messaging angles.
+          From a single prompt — or a full library of interviews, surveys, CRM notes, and
+          support tickets — Personaitor builds a living customer persona with JTBD, pains,
+          buying triggers, objections, and messaging angles, ready to plug into your stack.
         </p>
       </div>
 
@@ -150,12 +151,14 @@ const HowAndIndustries = () => {
 
       {/* ===== Industries we serve ===== */}
       <div id="industries" className="mt-16 md:mt-24">
-        <Badge variant="secondary" className="rounded-full">Industries we serve</Badge>
+        <Badge variant="secondary" className="rounded-full">Who it’s for</Badge>
         <h3 className="mt-4 text-2xl font-semibold tracking-tight sm:text-3xl">
-          Built for B2B teams across complex buying cycles
+          AI personas for SaaS, B2B, DevTools &amp; agencies
         </h3>
         <p className="mt-3 max-w-[72ch] text-[var(--muted-foreground)]">
-          PERSONAAITOR adapts to different roles, ACVs, and sales motions—so your personas reflect how your market really buys.
+          Whether you’re a solo founder validating an idea, a growth team scaling paid ads,
+          or an agency producing ICPs for clients — Personaitor adapts to your industry, ACV,
+          and sales motion so every buyer persona reflects how your market actually buys.
         </p>
 
         <ul
